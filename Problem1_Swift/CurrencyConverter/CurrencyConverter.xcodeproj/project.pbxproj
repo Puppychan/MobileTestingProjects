@@ -31,6 +31,7 @@
 		3D6A6CD62CE909EE0094F12B /* ConvertCurrencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6A6CD52CE909EE0094F12B /* ConvertCurrencyView.swift */; };
 		3D6A6CD92CE910B10094F12B /* CurrencyInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6A6CD82CE910B10094F12B /* CurrencyInputField.swift */; };
 		3D6A6CDB2CE911100094F12B /* CurrencySelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6A6CDA2CE911100094F12B /* CurrencySelectionSheet.swift */; };
+		3D9C70042CEA1D200080585D /* CurrencyAccuracyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C70032CEA1D200080585D /* CurrencyAccuracyEnum.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		3D6A6CD52CE909EE0094F12B /* ConvertCurrencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertCurrencyView.swift; sourceTree = "<group>"; };
 		3D6A6CD82CE910B10094F12B /* CurrencyInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyInputField.swift; sourceTree = "<group>"; };
 		3D6A6CDA2CE911100094F12B /* CurrencySelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionSheet.swift; sourceTree = "<group>"; };
+		3D9C70032CEA1D200080585D /* CurrencyAccuracyEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAccuracyEnum.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				3D6A6CB02CE77E290094F12B /* NetworkError.swift */,
+				3D9C70032CEA1D200080585D /* CurrencyAccuracyEnum.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				3D6A6CCC2CE8A9970094F12B /* HistoricalConversionResponse.swift in Sources */,
 				3D6A6CBA2CE780280094F12B /* ExchangeRateResponse.swift in Sources */,
 				3D6A6CD22CE8AE470094F12B /* NetworkErrorEnum.swift in Sources */,
+				3D9C70042CEA1D200080585D /* CurrencyAccuracyEnum.swift in Sources */,
 				3D6A6C7C2CE773650094F12B /* CurrencyConverterApp.swift in Sources */,
 				3D6A6CB12CE77E290094F12B /* NetworkError.swift in Sources */,
 				3D6A6CD92CE910B10094F12B /* CurrencyInputField.swift in Sources */,
