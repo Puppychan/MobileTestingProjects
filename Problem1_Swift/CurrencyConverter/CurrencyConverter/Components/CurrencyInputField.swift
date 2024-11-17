@@ -2,14 +2,14 @@ import SwiftUI
 
 struct CurrencyInputField: View {
     @Binding var amount: String
-    @Binding var selectedCurrency: CurrencyDetailModel
+    @Binding var selectedCurrency: CurrencyFlagModel
     let viewModel: CurrencyViewModel
     let title: String
     
     @State private var isSheetPresented: Bool = false // State to control the sheet
-
+    
     var body: some View {
-        HStack {
+        HStack(alignment: .bottom) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.caption)
@@ -17,7 +17,7 @@ struct CurrencyInputField: View {
                 
                 HStack {
                     // Currency Symbol and Amount
-                    Text(selectedCurrency.symbolNative)
+                    Text(selectedCurrency.symbol)
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
@@ -33,32 +33,37 @@ struct CurrencyInputField: View {
             }
             
             Spacer()
-
+            
             // Currency Picker Trigger Button
             Button(action: {
                 isSheetPresented = true
             }) {
                 HStack {
                     // Replace with actual flag images if available
-                    Image(systemName: "flag.fill") // Placeholder flag
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .clipShape(Circle())
-                        .padding(.trailing, 5)
-                    
-                    Text(selectedCurrency.name)
+                    if let flagImage = selectedCurrency.flag, let image = imageFromBase64(flagImage) {
+                        image
+                            .resizable()
+                            .scaledToFill() // Ensures the image fills the frame
+                            .frame(width: 32, height: 32) // Set the size
+                            .clipShape(RoundedRectangle(cornerRadius: 10)) // Clip to a circle
+                            .clipped() // Ensure content outside the frame is clipped
+                    } else {
+                        Color.clear.frame(width: 32, height: 32)
+                    }
+                    Text(selectedCurrency.code)
                         .font(.headline)
                         .foregroundColor(.black)
+                    // Add caret icon
+                    Image(systemName: "chevron.down")
+                        .foregroundColor(.gray) // Adjust color as needed
                 }
                 .padding(5)
-                .background(Color.white)
                 .cornerRadius(10)
-                .shadow(color: .gray.opacity(0.3), radius: 4, x: 0, y: 2)
             }
             .sheet(isPresented: $isSheetPresented) {
                 CurrencySelectionSheet(
                     selectedCurrency: $selectedCurrency,
-                    availableCurrencies: viewModel.renderedCurrencies ?? [:]
+                    availableCurrencies: viewModel.renderedCurrencies ?? []
                 )
             }
         }
@@ -70,8 +75,8 @@ struct CurrencyInputField: View {
                 .cornerRadius(12)
         )
         .shadow(color: .gray.opacity(0.2), radius: 8, x: 0, y: 4)
-        .onAppear {
-            viewModel.fetchCurrencies()
-        }
+        //        .onAppear {
+        //            viewModel.fetchCurrencies()
+        //        }
     }
 }

@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct ConvertCurrencyView: View {
-    private var viewModel = CurrencyViewModel()
-    @State private var fromCurrency: CurrencyDetailModel = CurrencyDetailModel.defaultFromCurrency
-    @State private var toCurrency: CurrencyDetailModel = CurrencyDetailModel.defaultToCurrency
+    @EnvironmentObject var viewModel: CurrencyViewModel
+
+    @State private var fromCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultFromCurrency
+    @State private var toCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultToCurrency
     @State private var fromAmount: String = "1000.00"
     @State private var toAmount: String = "736.70"
 
