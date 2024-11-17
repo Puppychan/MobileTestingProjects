@@ -140,7 +140,7 @@ class CurrencyViewModel: ObservableObject {
         //        let url = Constants.CURRENCY_API_URL + "convert"
         // Build the URL with query parameters
         var urlComponents = URLComponents(
-            string: Constants.CURRENCY_API_URL + "latest"
+            string: Constants.CURRENCY_API_URL + "convert"
         )
         var queryItems: [URLQueryItem] = []
         
@@ -208,6 +208,7 @@ class CurrencyViewModel: ObservableObject {
                     let response
                 ):
                     self?.conversionResponse = response
+                    print("Conversion response \(self?.conversionResponse)")
                 case .failure(
                     let error
                 ):

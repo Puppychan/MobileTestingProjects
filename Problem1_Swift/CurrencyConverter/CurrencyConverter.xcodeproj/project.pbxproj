@@ -33,6 +33,7 @@
 		3D9C70082CEA4FB20080585D /* CurrencyFlagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C70072CEA4FB20080585D /* CurrencyFlagModel.swift */; };
 		3D9C700E2CEA63330080585D /* final_currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D9C700D2CEA63330080585D /* final_currencies.json */; };
 		3D9C70102CEA65300080585D /* HandleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C700F2CEA65300080585D /* HandleImage.swift */; };
+		3D9C70122CEA73050080585D /* CustomFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C70112CEA73050080585D /* CustomFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		3D9C70072CEA4FB20080585D /* CurrencyFlagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFlagModel.swift; sourceTree = "<group>"; };
 		3D9C700D2CEA63330080585D /* final_currencies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = final_currencies.json; path = ../../../../../Supporting/final_currencies.json; sourceTree = "<group>"; };
 		3D9C700F2CEA65300080585D /* HandleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleImage.swift; sourceTree = "<group>"; };
+		3D9C70112CEA73050080585D /* CustomFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 			children = (
 				3D6A6CAD2CE77E120094F12B /* NetworkManager.swift */,
 				3D9C70052CEA4F810080585D /* CurrencyFlagManager.swift */,
+				3D9C70112CEA73050080585D /* CustomFormatter.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				3D6A6CBA2CE780280094F12B /* ExchangeRateResponse.swift in Sources */,
 				3D6A6CD22CE8AE470094F12B /* NetworkErrorEnum.swift in Sources */,
 				3D9C70042CEA1D200080585D /* CurrencyAccuracyEnum.swift in Sources */,
+				3D9C70122CEA73050080585D /* CustomFormatter.swift in Sources */,
 				3D6A6C7C2CE773650094F12B /* CurrencyConverterApp.swift in Sources */,
 				3D9C70102CEA65300080585D /* HandleImage.swift in Sources */,
 				3D6A6CD92CE910B10094F12B /* CurrencyInputField.swift in Sources */,
