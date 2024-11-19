@@ -9,29 +9,10 @@ struct CurrencyInputField: View {
     let title: String
     
     @State private var isSheetPresented: Bool = false
-    @State private var userInput: Double = 0.0
+    @State private var userInput: String = ""
+    @State private var uiTextView: UITextView?
+    @State private var cursorPosition: Int = 0
     @State private var debounceWorkItem: DispatchWorkItem? // Debounce handler
-    
-    var decimalFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 3
-        formatter.usesGroupingSeparator = true // Enables grouping (thousands separator)
-        
-        // Explicitly set the locale to a known locale that uses comma separators, if needed
-        // Uncomment the next line to force a specific locale
-        // formatter.locale = Locale(identifier: "en_US")
-        
-        // Explicitly setting grouping and decimal separators
-        formatter.groupingSeparator = ","
-        formatter.decimalSeparator = "."
-        
-        formatter.maximumIntegerDigits = 15 // Limiting the maximum digits
-        
-        
-        return formatter
-    }
     
     
     var body: some View {
@@ -48,23 +29,17 @@ struct CurrencyInputField: View {
                         .fontWeight(.bold)
                         .foregroundColor(.black)
                     
-                    TextField("", value: $userInput, formatter: decimalFormatter)
+                    TextField("", text: $userInput, onEditingChanged: { _ in }, onCommit: {})
                         .keyboardType(.decimalPad)
                         .font(.title3)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity)
-                        .onChange(of: userInput) {
-                            let clampedValue = min(max(userInput, 0), 10_000_000_000) // Adjust max value as appropriate
-                            if clampedValue.isFinite && isFocused {
-                                handleAmountChange(newValue: clampedValue)
-                            } else {
-                                // Log or handle invalid or out of range values
-                                print("Invalid or out of range number encountered: \(userInput)")
-                                userInput = 10_000_000_000.0
-                            }
+                        .onReceive(userInput.publisher.collect()) {
+                            handleUserInputChange($0)
                         }
+                    
                 }
             }
             
@@ -88,8 +63,12 @@ struct CurrencyInputField: View {
                 .cornerRadius(12)
         )
         .shadow(color: .gray.opacity(0.2), radius: 8, x: 0, y: 4)
-        .onChange(of: amount) {
-            userInput = amount
+        .onChange(of: amount) { newAmount in
+            // Keep userInput in sync with amount changes
+            // Only call to receive update outside the input field - Not focused field
+            if (!isFocused) {
+                userInput = decimalFormatter.string(from: NSNumber(value: newAmount)) ?? ""
+            }
         }
     }
     
@@ -110,6 +89,52 @@ struct CurrencyInputField: View {
             .foregroundColor(.black)
         Image(systemName: "chevron.down")
             .foregroundColor(.gray)
+    }
+    
+    /// Handle changes to the user input, validate and format
+    private func handleUserInputChange(_ input: [String.Element]) {
+        // Define source of rawInput
+        // If not main convert field, get amount to display formatted number
+        let rawInput: String
+        if isFocused {
+            rawInput = String(input)
+        } else {
+            rawInput = String(amount)
+        }
+        
+        // Allow only valid numeric characters, decimal separator, and grouping separator
+        let sanitizedInput = rawInput.filter { character in
+            character.isNumber || character == "." || character == ","
+        }
+        
+        // Format input if necessary
+        let formattedInput = sanitizedInput.replacingOccurrences(of: ",", with: "")
+        
+        // Format string to number
+        guard let formattedNumber = decimalFormatter.number(from: formattedInput) else {
+            // If input is invalid, show the sanitized string without invalid characters
+            userInput = sanitizedInput
+            return
+        }
+        let newAmount = formattedNumber.doubleValue
+        
+        // Prevent redundant updates (onReceive call twice - prevent spamming API
+        if amount != newAmount {
+            amount = newAmount
+            // Only call API if main convert input field
+            if (isFocused) {
+                handleAmountChange(newValue: amount)
+            }
+        }
+        
+        // Format number back to string with desired format number
+        var finalString = decimalFormatter.string(from: formattedNumber) ?? ""
+        // Handle case where formattedInput ends with a '.'
+        // If the input ends with a ".", append "0" to make it valide
+        if formattedInput.hasSuffix(".") {
+            finalString.append(".")
+        }
+        userInput = finalString
     }
     
     

@@ -7,12 +7,29 @@
 
 import Foundation
 
-
 var decimalFormatter: NumberFormatter {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
+    
+    formatter.minimum = .init(floatLiteral: 1.0)
+    formatter.maximum = .init(floatLiteral: Double.greatestFiniteMagnitude)
+    
     formatter.minimumFractionDigits = 0
     formatter.maximumFractionDigits = 3
-    formatter.decimalSeparator = ","
+    
+    formatter.maximumIntegerDigits = 15 // Limiting the maximum digits
+    
+    formatter.usesGroupingSeparator = true // Enables grouping (thousands separator)
+    
+    // Explicitly set the locale to a known locale that uses comma separators, if needed
+    // Uncomment the next line to force a specific locale
+    // formatter.locale = Locale(identifier: "en_US")
+    
+    // Explicitly setting grouping and decimal separators
+    formatter.groupingSeparator = ","
+    formatter.decimalSeparator = "."
+    
+    
+    
     return formatter
 }
