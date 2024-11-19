@@ -9,11 +9,18 @@ import Foundation
 
 class CurrencyViewModel: ObservableObject {
     @Published var renderedLatestResponse: LatestRatesResponse?
-    @Published var renderedCurrencies: [String: CurrencyDetailModel]?
+    @Published var renderedCurrencies: [CurrencyFlagModel]?
     @Published var conversionResponse: ConversionResponse?
     @Published var renderedTimeseriesResponse: TimeseriesResponse?
     @Published var renderedHistoricalConversionResponse: HistoricalConversionResponse?
     @Published var errorMessage: String?
+    
+    init() {
+        loadRenderedCurrencies()
+    }
+    private func loadRenderedCurrencies() {
+        self.renderedCurrencies = CurrencyFlagManager.shared.currencies
+    }
     
     func fetchLatestRates(
         currencies: [String]? = nil,
@@ -100,27 +107,27 @@ class CurrencyViewModel: ObservableObject {
         }
     }
     
-    func fetchCurrencies() {
-        let url = Constants.CURRENCY_API_URL + "currencies"
-        
-        NetworkingManager.shared.fetch(
-            from: url,
-            responseType: CurrenciesResponse.self
-        ) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(
-                    let response
-                ):
-                    self?.renderedCurrencies = response.currencies
-                case .failure(
-                    let error
-                ):
-                    self?.errorMessage = error.localizedDescription
-                }
-            }
-        }
-    }
+//    func fetchCurrencies() {
+//        let url = Constants.CURRENCY_API_URL + "currencies"
+//        
+//        NetworkingManager.shared.fetch(
+//            from: url,
+//            responseType: CurrenciesResponse.self
+//        ) { [weak self] result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(
+//                    let response
+//                ):
+//                    self?.renderedCurrencies = response.currencies
+//                case .failure(
+//                    let error
+//                ):
+//                    self?.errorMessage = error.localizedDescription
+//                }
+//            }
+//        }
+//    }
     
     func convertCurrency(
         from: String,
@@ -133,7 +140,7 @@ class CurrencyViewModel: ObservableObject {
         //        let url = Constants.CURRENCY_API_URL + "convert"
         // Build the URL with query parameters
         var urlComponents = URLComponents(
-            string: Constants.CURRENCY_API_URL + "latest"
+            string: Constants.CURRENCY_API_URL + "convert"
         )
         var queryItems: [URLQueryItem] = []
         
