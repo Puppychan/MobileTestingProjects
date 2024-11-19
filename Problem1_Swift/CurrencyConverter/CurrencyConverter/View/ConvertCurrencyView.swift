@@ -11,8 +11,8 @@ struct ConvertCurrencyView: View {
     
     @State private var fromCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultFromCurrency
     @State private var toCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultToCurrency
-    @State private var fromAmount: Double = 1000.00
-    @State private var toAmount: Double = 736.70
+    @State private var fromAmount: Double = 0
+    @State private var toAmount: Double = 0
     
     var body: some View {
         

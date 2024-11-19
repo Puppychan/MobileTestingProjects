@@ -10,8 +10,6 @@ struct CurrencyInputField: View {
     
     @State private var isSheetPresented: Bool = false
     @State private var userInput: String = ""
-    @State private var uiTextView: UITextView?
-    @State private var cursorPosition: Int = 0
     @State private var debounceWorkItem: DispatchWorkItem? // Debounce handler
     
     
@@ -67,7 +65,7 @@ struct CurrencyInputField: View {
             // Keep userInput in sync with amount changes
             // Only call to receive update outside the input field - Not focused field
             if (!isFocused) {
-                userInput = decimalFormatter.string(from: NSNumber(value: newAmount)) ?? ""
+                syncUserInputWithAmount()
             }
         }
     }
@@ -91,29 +89,30 @@ struct CurrencyInputField: View {
             .foregroundColor(.gray)
     }
     
+    private func syncUserInputWithAmount() {
+           userInput = decimalFormatter.string(from: NSNumber(value: amount)) ?? ""
+    }
+    
+    private func sanitizeInput(_ input: String) -> String {
+        // Ensure input only contains valid characters
+        input.filter { $0.isNumber || $0 == "." || $0 == "," }.replacingOccurrences(of: ",", with: "")
+    }
+    
     /// Handle changes to the user input, validate and format
     private func handleUserInputChange(_ input: [String.Element]) {
         // Define source of rawInput
         // If not main convert field, get amount to display formatted number
         let rawInput: String
         if isFocused {
-            rawInput = String(input)
+            rawInput = sanitizeInput(String(input))
         } else {
-            rawInput = String(amount)
+            rawInput = sanitizeInput(String(amount))
         }
-        
-        // Allow only valid numeric characters, decimal separator, and grouping separator
-        let sanitizedInput = rawInput.filter { character in
-            character.isNumber || character == "." || character == ","
-        }
-        
-        // Format input if necessary
-        let formattedInput = sanitizedInput.replacingOccurrences(of: ",", with: "")
         
         // Format string to number
-        guard let formattedNumber = decimalFormatter.number(from: formattedInput) else {
+        guard let formattedNumber = decimalFormatter.number(from: rawInput) else {
             // If input is invalid, show the sanitized string without invalid characters
-            userInput = sanitizedInput
+            userInput = ""
             return
         }
         let newAmount = formattedNumber.doubleValue
@@ -126,12 +125,12 @@ struct CurrencyInputField: View {
                 handleAmountChange(newValue: amount)
             }
         }
-        
+
         // Format number back to string with desired format number
         var finalString = decimalFormatter.string(from: formattedNumber) ?? ""
         // Handle case where formattedInput ends with a '.'
         // If the input ends with a ".", append "0" to make it valide
-        if formattedInput.hasSuffix(".") {
+        if rawInput.hasSuffix(".") {
             finalString.append(".")
         }
         userInput = finalString

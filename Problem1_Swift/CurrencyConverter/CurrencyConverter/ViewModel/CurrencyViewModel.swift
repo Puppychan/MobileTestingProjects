@@ -208,7 +208,6 @@ class CurrencyViewModel: ObservableObject {
                     let response
                 ):
                     self?.conversionResponse = response
-                    print("Conversion response \(self?.conversionResponse)")
                 case .failure(
                     let error
                 ):
