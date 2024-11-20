@@ -16,13 +16,13 @@ struct HomeView: View {
                         .scaledToFit()
                         .frame(width: 50, height: 50) // Resize the image to 50x50
                     Text("Welcome to app")
-                        .padding()
+                        .font(.title)
                     Grid(horizontalSpacing: 5, verticalSpacing: 20) {
                         
                         CurrencyConvertCard(fromCurrency: $fromCurrency, toCurrency: $toCurrency, fromAmount: $fromAmount, toAmount: $toAmount)
                         
                         //                        tempCardMarking()
-                        CurrencyChartView()
+                        CurrencyChartView(fromCurrency: $fromCurrency, toCurrency: $toCurrency)
                         
                         GridRow {
                             tempCardMarking()

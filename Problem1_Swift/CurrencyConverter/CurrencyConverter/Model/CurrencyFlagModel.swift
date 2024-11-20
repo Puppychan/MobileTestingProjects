@@ -8,7 +8,7 @@
 import Foundation
 
 // Model for each currency detail
-struct CurrencyFlagModel: Codable {
+struct CurrencyFlagModel: Codable, Equatable {
     let code: String
     let name: String
     let country: String
@@ -24,6 +24,12 @@ struct CurrencyFlagModel: Codable {
         case countryCode
         case flag
         case symbol
+    }
+    
+    static func == (lhs: CurrencyFlagModel, rhs: CurrencyFlagModel) -> Bool {
+        return lhs.code == rhs.code &&
+               lhs.name == rhs.name &&
+               lhs.country == rhs.country
     }
     
     // Default instances for From and To currencies

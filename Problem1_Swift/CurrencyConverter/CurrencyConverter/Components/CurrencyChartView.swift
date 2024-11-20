@@ -11,20 +11,28 @@ import Charts
 
 struct CurrencyChartView: View {
     @EnvironmentObject var viewModel: CurrencyViewModel
+    @StateObject var chartViewModel: CurrencyChartViewModel = CurrencyChartViewModel()
+    
+    @Binding var fromCurrency: CurrencyFlagModel
+    @Binding var toCurrency: CurrencyFlagModel
     
     //    let exchangeRates: [ExchangeRateModel]
     //    let currency: String
     
     var body: some View {
         VStack {
-            Text("Exchange Rates for ")
+            Text("Exchange Rates for \(toCurrency.code) - \(toCurrency.name)")
                 .font(.headline)
-                .padding()
-            if !viewModel.exchangeRates.isEmpty {
-                let minRate = viewModel.exchangeRates.map { $0.rate }.min() ?? 0
-                let maxRate = viewModel.exchangeRates.map { $0.rate }.max() ?? 0
-                Text("\(viewModel.exchangeRates[0].date) - \(viewModel.exchangeRates[0].rate)")
-                Chart(viewModel.exchangeRates) {
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+            Text("Base Currency: \(fromCurrency.code) - \(fromCurrency.name)")
+                .multilineTextAlignment(.center)
+                .font(.subheadline)
+            if !chartViewModel.exchangeRates.isEmpty {
+                let minRate = chartViewModel.exchangeRates.map { $0.rate }.min() ?? 0
+                let maxRate = chartViewModel.exchangeRates.map { $0.rate }.max() ?? 0
+                
+                Chart(chartViewModel.exchangeRates) {
                     LineMark(
                         x: .value("Date", $0.date),
                         y: .value("Rate", $0.rate)
@@ -42,12 +50,23 @@ struct CurrencyChartView: View {
             }
         }
         .onAppear() {
-            
-            viewModel.fetchTimeseries(startDate: getTimestamptz(10), endDate: getTimestamptz(), currencies: ["USD", "VND", "EUR"])
+            fetchTimeseriesCurrencies()
         }
+        .onChange(of: fromCurrency) { _ in
+            fetchTimeseriesCurrencies()
+        }
+        .onChange(of: toCurrency) { _ in
+            fetchTimeseriesCurrencies()
+        }
+        .onChange(of: viewModel.renderedTimeseriesResponse) { newResponse in
+            if let response = newResponse {
+                chartViewModel.fetchExchangeRates(from: response, for: toCurrency.code)
+            }
+        }
+        
     }
-}
-
-#Preview {
-    CurrencyChartView()
+    
+    private func fetchTimeseriesCurrencies() {
+        viewModel.fetchTimeseries(startDate: getTimestamptz(10), endDate: getTimestamptz(), currencies: [toCurrency.code], base: fromCurrency.code)
+    }
 }
