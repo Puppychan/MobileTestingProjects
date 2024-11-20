@@ -16,7 +16,7 @@ struct CurrencyConverterApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ConvertCurrencyView()
+            ContentView()
                 .environmentObject(CurrencyViewModel()) // Provide CurrencyViewModel globally
 
         }

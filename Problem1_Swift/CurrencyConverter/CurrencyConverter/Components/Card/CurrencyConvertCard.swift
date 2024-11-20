@@ -1,18 +1,26 @@
+//
+//  CurrencyConvertCard.swift
+//  CurrencyConverter
+//
+//  Created by Nhung Tran on 19/11/2024.
+//
+
 import SwiftUI
+
 
 enum FocusField {
     case fromAmount, toAmount
 }
 
-struct ConvertCurrencyView: View {
+struct CurrencyConvertCard: View {
     @EnvironmentObject var viewModel: CurrencyViewModel
     
     @FocusState private var focusedField: FocusField?
     
-    @State private var fromCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultFromCurrency
-    @State private var toCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultToCurrency
-    @State private var fromAmount: Double = 0
-    @State private var toAmount: Double = 0
+    @Binding var fromCurrency: CurrencyFlagModel
+    @Binding var toCurrency: CurrencyFlagModel
+    @Binding var fromAmount: Double
+    @Binding var toAmount: Double
     
     var body: some View {
         
@@ -63,10 +71,10 @@ struct ConvertCurrencyView: View {
             }
         }
         .padding()
-        .background(Color(.systemGray6))
+        .background(ThemeConstants.PRIMARY_COLOR)
         .cornerRadius(20)
-        .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
-        .padding()
+        .shadow(radius: 10)
+//        .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
     }
     
     private func updateToAmount() {
@@ -82,10 +90,4 @@ struct ConvertCurrencyView: View {
             fromAmount = result
         }
     }
-    
-}
-
-
-#Preview {
-    ConvertCurrencyView()
 }

@@ -12,6 +12,7 @@ class CurrencyViewModel: ObservableObject {
     @Published var renderedCurrencies: [CurrencyFlagModel]?
     @Published var conversionResponse: ConversionResponse?
     @Published var renderedTimeseriesResponse: TimeseriesResponse?
+    @Published var exchangeRates: [ExchangeRateModel] = []
     @Published var renderedHistoricalConversionResponse: HistoricalConversionResponse?
     @Published var errorMessage: String?
     
@@ -310,6 +311,7 @@ class CurrencyViewModel: ObservableObject {
                     let response
                 ):
                     self?.renderedTimeseriesResponse = response
+                    self?.exchangeRates = response.getExchangeRates(for: currency)
                 case .failure(
                     let error
                 ):

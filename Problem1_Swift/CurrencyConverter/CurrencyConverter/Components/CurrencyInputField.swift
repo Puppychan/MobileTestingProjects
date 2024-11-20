@@ -18,20 +18,20 @@ struct CurrencyInputField: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
                 
                 HStack {
                     // Currency Symbol and Amount
                     Text(selectedCurrency.symbol)
                         .font(.headline)
                         .fontWeight(.bold)
-                        .foregroundColor(.black)
+                        .foregroundColor(ThemeConstants.TEXT_COLOR)
                     
                     TextField("", text: $userInput, onEditingChanged: { _ in }, onCommit: {})
                         .keyboardType(.decimalPad)
                         .font(.title3)
                         .fontWeight(.bold)
-                        .foregroundColor(.black)
+                        .foregroundColor(ThemeConstants.TEXT_COLOR)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity)
                         .onReceive(userInput.publisher.collect()) {
@@ -57,10 +57,9 @@ struct CurrencyInputField: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .stroke(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .leading, endPoint: .trailing), lineWidth: isFocused ? 4 : 2)
-                .background(Color.white)
-                .cornerRadius(12)
+                .background(ThemeConstants.BACKGROUND_COLOR)
+                .cornerRadius(10)
         )
-        .shadow(color: .gray.opacity(0.2), radius: 8, x: 0, y: 4)
         .onChange(of: amount) { newAmount in
             // Keep userInput in sync with amount changes
             // Only call to receive update outside the input field - Not focused field
@@ -84,9 +83,9 @@ struct CurrencyInputField: View {
         }
         Text(selectedCurrency.code)
             .font(.headline)
-            .foregroundColor(.black)
+            .foregroundColor(ThemeConstants.TEXT_COLOR)
         Image(systemName: "chevron.down")
-            .foregroundColor(.gray)
+            .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
     }
     
     private func syncUserInputWithAmount() {
