@@ -311,7 +311,13 @@ class CurrencyViewModel: ObservableObject {
                     let response
                 ):
                     self?.renderedTimeseriesResponse = response
-                    self?.exchangeRates = response.getExchangeRates(for: currency)
+                    print("Convertp timeseries \(response)")
+//                    for currency in currencies {
+//                        self?.exchangeRates = response.getExchangeRates(for: currency)
+//                    }
+                    self?.exchangeRates = response.getExchangeRates(for: "VND")
+                    print("********** Exchange Rates \(self?.exchangeRates)")
+
                 case .failure(
                     let error
                 ):

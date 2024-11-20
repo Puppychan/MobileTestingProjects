@@ -26,15 +26,17 @@ struct TimeseriesResponse: Codable {
     }
     
     func getExchangeRates(for currency: String) -> [ExchangeRateModel] {
-        let dateFormatter = ISO8601DateFormatter()
         var exchangeRates: [ExchangeRateModel] = []
 
-        for (dateString, rates) in rates {
-            if let rate = rates[currency],
-               let date = dateFormatter.date(from: dateString) {
+        for (dateString, rateDictionary) in rates {
+            if let rate = rateDictionary[currency],
+               let date = fromTimestamptzToDate(dateString) {
+                
                 exchangeRates.append(ExchangeRateModel(date: date, rate: rate))
             }
         }
+        
+        print("Response inside getExchangeRates \(exchangeRates)")
 
         return exchangeRates.sorted { $0.date < $1.date }
     }
