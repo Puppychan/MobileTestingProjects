@@ -91,7 +91,7 @@ def main_menu(products):
         
         if choice == "1":
             total_value = helpers.calculate_total_inventory_value(products)
-            print(f"\nTotal Inventory Value: {total_value:.2f}")
+            print(f"\nTotal Inventory Value: {total_value:,.2f}")
         elif choice == "2":
             most_expensive = helpers.find_most_expensive_product(products)
             print(f"\nMost Expensive Product: {most_expensive}")
