@@ -11,11 +11,23 @@ struct CurrencySelectionSheet: View {
     let availableCurrencies: [CurrencyFlagModel]
     
     @Environment(\.dismiss) private var dismiss
+    @State private var searchText: String = ""
+    
+    var filteredCurrencies: [CurrencyFlagModel] {
+         if searchText.isEmpty {
+             return availableCurrencies
+         } else {
+             return availableCurrencies.filter {
+                 $0.name.lowercased().contains(searchText.lowercased()) ||
+                 $0.code.lowercased().contains(searchText.lowercased())
+             }
+         }
+     }
     
     var body: some View {
         NavigationView {
             ScrollViewReader { proxy in
-                List(availableCurrencies, id: \.code) { currency in
+                List(filteredCurrencies, id: \.code) { currency in
                     HStack {
                         if currency.code == selectedCurrency.code {
                             Image(systemName: "checkmark")
@@ -44,6 +56,7 @@ struct CurrencySelectionSheet: View {
                     proxy.scrollTo(selectedCurrency.code, anchor: .center)
                 }
             }
+            .searchable(text: $searchText)
             .navigationTitle("Select Currency")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
