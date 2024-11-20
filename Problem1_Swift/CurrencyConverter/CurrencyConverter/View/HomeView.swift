@@ -22,13 +22,13 @@ struct HomeView: View {
                         CurrencyConvertCard(fromCurrency: $fromCurrency, toCurrency: $toCurrency, fromAmount: $fromAmount, toAmount: $toAmount)
                         
                         //                        tempCardMarking()
-                        CurrencyChartView(fromCurrency: $fromCurrency, toCurrency: $toCurrency)
+                        FromToCurrencyLineMark(fromCurrency: $fromCurrency, toCurrency: $toCurrency)
                         
                         GridRow {
-                            tempCardMarking()
+                            CurrencyInfoCard(currency: $fromCurrency)
                             //                        Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
                             
-                            tempCardMarking()
+                            CurrencyInfoCard(currency: $toCurrency)
                         }
                         
                         tempCardMarking()

@@ -22,15 +22,8 @@ struct CurrencySelectionSheet: View {
                                 .font(.system(size: 20, weight: .bold)) // Adjust size and weight
                             
                         }
-                        else if let flagImage = currency.flag, let image = imageFromBase64(flagImage) {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 32, height: 32)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .clipped()
-                        } else {
-                            Color.clear.frame(width: 32, height: 32)
+                        else {
+                            CurrencyFlag(currencyFlag: currency.flag, size: 32)
                         }
                         
                         Text(currency.name)

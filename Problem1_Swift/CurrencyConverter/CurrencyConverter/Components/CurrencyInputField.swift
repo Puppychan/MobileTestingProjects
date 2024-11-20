@@ -71,16 +71,7 @@ struct CurrencyInputField: View {
     
     @ViewBuilder
     private func currencyButtonContent() -> some View {
-        if let flagImage = selectedCurrency.flag, let image = imageFromBase64(flagImage) {
-            image
-                .resizable()
-                .scaledToFill()
-                .frame(width: 32, height: 32)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .clipped()
-        } else {
-            Color.clear.frame(width: 32, height: 32)
-        }
+        CurrencyFlag(currencyFlag: selectedCurrency.flag, size: 32)
         Text(selectedCurrency.code)
             .font(.headline)
             .foregroundColor(ThemeConstants.TEXT_COLOR)
@@ -89,7 +80,7 @@ struct CurrencyInputField: View {
     }
     
     private func syncUserInputWithAmount() {
-           userInput = decimalFormatter.string(from: NSNumber(value: amount)) ?? ""
+        userInput = decimalFormatter.string(from: NSNumber(value: amount)) ?? ""
     }
     
     private func sanitizeInput(_ input: String) -> String {
@@ -124,7 +115,7 @@ struct CurrencyInputField: View {
                 handleAmountChange(newValue: amount)
             }
         }
-
+        
         // Format number back to string with desired format number
         var finalString = decimalFormatter.string(from: formattedNumber) ?? ""
         // Handle case where formattedInput ends with a '.'

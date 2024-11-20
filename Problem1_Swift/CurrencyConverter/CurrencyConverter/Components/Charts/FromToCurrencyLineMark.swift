@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 
-struct CurrencyChartView: View {
+struct FromToCurrencyLineMark: View {
     @EnvironmentObject var viewModel: CurrencyViewModel
     @StateObject var chartViewModel: CurrencyChartViewModel = CurrencyChartViewModel()
     
