@@ -44,14 +44,7 @@ struct CurrencyInputField: View {
             Spacer()
             
             // Currency Picker Trigger Button
-            Button(action: {
-                isSheetPresented = true
-            }) {
-                currencyButtonContent()
-            }
-            .sheet(isPresented: $isSheetPresented) {
-                CurrencySelectionSheet(selectedCurrency: $selectedCurrency, availableCurrencies: viewModel.renderedCurrencies ?? [])
-            }
+            currencyButtonContent
         }
         .padding()
         .background(
@@ -69,14 +62,20 @@ struct CurrencyInputField: View {
         }
     }
     
-    @ViewBuilder
-    private func currencyButtonContent() -> some View {
-        CurrencyFlag(currencyFlag: selectedCurrency.flag, size: 32)
-        Text(selectedCurrency.code)
-            .font(.headline)
-            .foregroundColor(ThemeConstants.TEXT_COLOR)
-        Image(systemName: "chevron.down")
-            .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+    private var currencyButtonContent: some View {
+        Button(action: {
+            isSheetPresented = true
+        }) {
+            CurrencyFlag(currencyFlag: selectedCurrency.flag, size: 32)
+            Text(selectedCurrency.code)
+                .font(.headline)
+                .foregroundColor(ThemeConstants.TEXT_COLOR)
+            Image(systemName: "chevron.down")
+                .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+        }
+        .sheet(isPresented: $isSheetPresented) {
+            CurrencySelectionSheet(selectedCurrency: $selectedCurrency, availableCurrencies: viewModel.renderedCurrencies ?? [])
+        }
     }
     
     private func syncUserInputWithAmount() {

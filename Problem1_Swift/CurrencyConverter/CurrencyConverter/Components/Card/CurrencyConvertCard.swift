@@ -25,22 +25,20 @@ struct CurrencyConvertCard: View {
     var body: some View {
         
         if #available(iOS 17.0, *) {
-            createExchangeContentView()
+            exchangeContentView
                 .onChange(of: viewModel.conversionResponse) {
                     updateToAmount()
                 }
         } else {
             // Fallback on earlier versions
-            createExchangeContentView()
+            exchangeContentView
                 .onChange(of: viewModel.conversionResponse) { _ in
                     updateToAmount()
                 }
-            
         }
     }
     
-    @ViewBuilder
-    private func createExchangeContentView() -> some View {
+    private var exchangeContentView: some View {
         VStack(spacing: 20) {
             // Top Section: From Currency
             CurrencyInputField(
@@ -74,7 +72,7 @@ struct CurrencyConvertCard: View {
         .background(ThemeConstants.PRIMARY_COLOR)
         .cornerRadius(20)
         .shadow(radius: 10)
-//        .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
+        //        .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
     }
     
     private func updateToAmount() {
@@ -82,7 +80,7 @@ struct CurrencyConvertCard: View {
             if focusedField == .fromAmount { toAmount = 0 } else { fromAmount = 0 }
             return
         }
-
+        
         // Based on current focused input -> choose which input field to update the result
         if focusedField == .fromAmount {
             toAmount = result
