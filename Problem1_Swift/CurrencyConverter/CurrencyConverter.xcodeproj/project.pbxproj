@@ -46,6 +46,7 @@
 		3D9C703E2CEEF87F0080585D /* SettingUserPreferenceSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C703D2CEEF87F0080585D /* SettingUserPreferenceSection.swift */; };
 		3D9C70412CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C70402CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift */; };
 		601F78DC2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601F78DB2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift */; };
+		601F78DE2CEF41CE00C051AC /* ConversionResultSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601F78DD2CEF41CE00C051AC /* ConversionResultSection.swift */; };
 		602BDC0E2CEDD3C800C5455D /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602BDC0D2CEDD3C800C5455D /* CustomDateFormatter.swift */; };
 		602BDC162CEDDA9A00C5455D /* final_currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 602BDC152CEDDA9A00C5455D /* final_currencies.json */; };
 		602BDC172CEDDA9A00C5455D /* final_currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 602BDC152CEDDA9A00C5455D /* final_currencies.json */; };
@@ -116,6 +117,7 @@
 		3D9C703D2CEEF87F0080585D /* SettingUserPreferenceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUserPreferenceSection.swift; sourceTree = "<group>"; };
 		3D9C70402CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleCurrenciesSelectionSheet.swift; sourceTree = "<group>"; };
 		601F78DB2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryBackgroundCardStyle.swift; sourceTree = "<group>"; };
+		601F78DD2CEF41CE00C051AC /* ConversionResultSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionResultSection.swift; sourceTree = "<group>"; };
 		602BDC0D2CEDD3C800C5455D /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
 		602BDC152CEDDA9A00C5455D /* final_currencies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = final_currencies.json; sourceTree = "<group>"; };
 		602BDC192CEDF61100C5455D /* CurrencyChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyChartViewModel.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 				3D6A6CDA2CE911100094F12B /* CurrencySelectionSheet.swift */,
 				602BDC1E2CEDFD3800C5455D /* CurrencyFlag.swift */,
 				3D9C70402CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift */,
+				601F78DD2CEF41CE00C051AC /* ConversionResultSection.swift */,
 			);
 			path = Currency;
 			sourceTree = "<group>";
@@ -426,7 +429,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					3D6A6C772CE773650094F12B = {
 						CreatedOnToolsVersion = 15.3;
@@ -510,6 +513,7 @@
 				3D6A6CCC2CE8A9970094F12B /* HistoricalConversionResponse.swift in Sources */,
 				3D9C70342CEED9180080585D /* CombinedBarLineChart.swift in Sources */,
 				3D9C70412CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift in Sources */,
+				601F78DE2CEF41CE00C051AC /* ConversionResultSection.swift in Sources */,
 				3D6A6CD22CE8AE470094F12B /* NetworkErrorEnum.swift in Sources */,
 				3D9C70042CEA1D200080585D /* CurrencyAccuracyEnum.swift in Sources */,
 				3D9C70202CECA7800080585D /* CurrencyConvertCard.swift in Sources */,
@@ -603,6 +607,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -664,6 +669,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -691,6 +697,7 @@
 				CODE_SIGN_ENTITLEMENTS = CurrencyConverter/CurrencyConverter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CurrencyConverter/Preview Content\"";
 				DEVELOPMENT_TEAM = XFNA3XP78Q;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -729,6 +736,7 @@
 				CODE_SIGN_ENTITLEMENTS = CurrencyConverter/CurrencyConverter.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"CurrencyConverter/Preview Content\"";
 				DEVELOPMENT_TEAM = XFNA3XP78Q;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -762,10 +770,10 @@
 		3D6A6CA12CE773670094F12B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = XFNA3XP78Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
@@ -785,10 +793,10 @@
 		3D6A6CA22CE773670094F12B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = XFNA3XP78Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
@@ -808,9 +816,9 @@
 		3D6A6CA42CE773670094F12B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = XFNA3XP78Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
@@ -830,9 +838,9 @@
 		3D6A6CA52CE773670094F12B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = XFNA3XP78Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
