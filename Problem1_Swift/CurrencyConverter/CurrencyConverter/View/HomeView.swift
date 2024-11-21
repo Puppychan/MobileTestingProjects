@@ -1,11 +1,32 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var fromCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultFromCurrency
-    @State private var toCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultToCurrency
+    @EnvironmentObject var userPreferences: UserPreferencesViewModel
+
+//    @State private var fromCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultFromCurrency
+//    @State private var toCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultToCurrency
     @State private var fromAmount: Double = 0
     @State private var toAmount: Double = 0
     
+    private var fromCurrency: Binding<CurrencyFlagModel> {
+        Binding(
+            get: { userPreferences.baseCurrency },
+            set: { userPreferences.baseCurrency = $0 }
+        )
+    }
+    
+    private var toCurrency: Binding<CurrencyFlagModel> {
+        Binding(
+            get: { userPreferences.targetCurrencies.first ?? CurrencyFlagModel.defaultToCurrency },
+            set: { newCurrency in
+                if let index = userPreferences.targetCurrencies.firstIndex(where: { $0.code == newCurrency.code }) {
+                    userPreferences.targetCurrencies[index] = newCurrency
+                } else {
+                    userPreferences.targetCurrencies.insert(newCurrency, at: 0)
+                }
+            }
+        )
+    }
     
     var body: some View {
         ScrollView(.vertical) {
@@ -19,16 +40,16 @@ struct HomeView: View {
                         .font(.title)
                     Grid(horizontalSpacing: 5, verticalSpacing: 20) {
                         
-                        CurrencyConvertCard(fromCurrency: $fromCurrency, toCurrency: $toCurrency, fromAmount: $fromAmount, toAmount: $toAmount)
+                        CurrencyConvertCard(fromCurrency: fromCurrency, toCurrency: toCurrency, fromAmount: $fromAmount, toAmount: $toAmount)
                         
                         //                        tempCardMarking()
-                        FromToCurrencyLineMark(fromCurrency: $fromCurrency, toCurrency: $toCurrency)
+                        FromToCurrencyLineMark(fromCurrency: fromCurrency, toCurrency: toCurrency)
                         
                         GridRow {
-                            CurrencyInfoCard(currency: $fromCurrency)
+                            CurrencyInfoCard(currency: fromCurrency)
                             //                        Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
                             
-                            CurrencyInfoCard(currency: $toCurrency)
+                            CurrencyInfoCard(currency: toCurrency)
                         }
                         
                         tempCardMarking()
