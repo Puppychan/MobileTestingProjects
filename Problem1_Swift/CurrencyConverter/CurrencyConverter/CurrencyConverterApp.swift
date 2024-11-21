@@ -21,6 +21,7 @@ struct CurrencyConverterApp: App {
             ContentView()
                 .environmentObject(themeManager)
                 .environmentObject(CurrencyViewModel()) // Provide CurrencyViewModel globally
+                .environmentObject(UserPreferencesViewModel())
 
         }
     }

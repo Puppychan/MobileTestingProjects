@@ -25,7 +25,6 @@ enum Theme: String, CaseIterable, Identifiable {
 
 struct SettingView: View {
     @EnvironmentObject var themeManager: ThemeManager
-
     
     var body: some View {
         NavigationView {
@@ -33,7 +32,7 @@ struct SettingView: View {
             ScrollView(.vertical) {
                 ViewThatFits {
                     VStack(spacing: 10) {
-                        settingSection
+                        createSettingSection()
                         aboutMeSection
                     }
                 }
@@ -43,13 +42,9 @@ struct SettingView: View {
             }
         }
     }
-    private var settingSection: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text("Appearance")
-                .font(.title2)
-                .fontWeight(.bold)
-                .padding(.bottom, 5)
-            
+    @ViewBuilder
+    private func createSettingSection() -> some View {
+        SettingSectionCard(title: "Appearance") {
             ForEach(Theme.allCases) { theme in
                 HStack {
                     VStack(alignment: .leading) {
@@ -75,7 +70,9 @@ struct SettingView: View {
                 .cornerRadius(10)
             }
         }
-        .modifier(ReusableCardStyle())
+        
+        SettingUserPreferenceSection()
+
     }
     private var aboutMeSection: some View {
         
@@ -102,23 +99,8 @@ struct SettingView: View {
             }
             .padding(.leading)
         }
-        .modifier(ReusableCardStyle())
+        .modifier(BorderCardStyle())
         
     }
-    struct ReusableCardStyle: ViewModifier {
-        func body(content: Content) -> some View {
-            content
-                .padding()
-                .background(ThemeConstants.BACKGROUND_COLOR.opacity(0.3))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(ThemeConstants.TERTIARY_COLOR, lineWidth: 1)
-                )
-                .cornerRadius(10)
-        }
-    }
-}
 
-#Preview {
-    SettingView()
 }

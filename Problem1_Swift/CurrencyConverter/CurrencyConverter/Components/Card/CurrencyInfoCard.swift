@@ -24,7 +24,7 @@ struct CurrencyInfoCard: View {
                 Text(currency.countryCode.uppercased())
                     .font(.footnote)
                     .lineLimit(1)
-                    .foregroundColor(ThemeConstants.SECONDARY_COLOR)
+                    .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
                 Spacer()
                 labelText("Country Name")
             }
@@ -42,17 +42,14 @@ struct CurrencyInfoCard: View {
                 Text(currency.name)
                     .font(.footnote)
                     .lineLimit(1)
-                    .foregroundColor(ThemeConstants.SECONDARY_COLOR)
+                    .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
                 Spacer()
                 labelText("Full name")
             }
             
         }
-        .padding()
-        .background(ThemeConstants.BACKGROUND_COLOR)
-        .cornerRadius(10)
+        .modifier(BorderCardStyle())
         .frame(maxWidth: .infinity)
-        .shadow(radius: 3)
     }
     @ViewBuilder
     private func labelText(_ label: String) -> some View {
