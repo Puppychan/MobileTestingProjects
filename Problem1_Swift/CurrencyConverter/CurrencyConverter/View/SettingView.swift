@@ -34,11 +34,7 @@ struct SettingView: View {
                 ViewThatFits {
                     VStack(spacing: 10) {
                         settingSection
-                        NavigationLink {
-                            AboutMeView()
-                        } label: {
-                            aboutMeSection
-                        }
+                        aboutMeSection
                     }
                 }
                 .padding()
