@@ -3,8 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var userPreferences: UserPreferencesViewModel
     
-    //    @State private var fromCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultFromCurrency
-    //    @State private var toCurrency: CurrencyFlagModel = CurrencyFlagModel.defaultToCurrency
+    @Binding var selectedTab: ContentView.Tab
     @State private var fromAmount: Double = 0
     @State private var toAmount: Double = 0
     
@@ -29,40 +28,37 @@ struct HomeView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ScrollView(.vertical) {
-                ViewThatFits {
-                    VStack(alignment: .leading) {
-                        ThemeConstants.IMAGE_APP_LOGO
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50) // Resize the image to 50x50
-                        Text("Welcome to app")
-                            .font(.title)
-                        Grid(horizontalSpacing: 5, verticalSpacing: 20) {
+        ScrollView(.vertical) {
+            ViewThatFits {
+                VStack(alignment: .leading) {
+                    ThemeConstants.IMAGE_APP_LOGO
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50, height: 50) // Resize the image to 50x50
+                    Text("Welcome to app")
+                        .font(.title)
+                    Grid(horizontalSpacing: 5, verticalSpacing: 20) {
+                        
+                        CurrencyConvertCard(fromCurrency: fromCurrency, toCurrency: toCurrency, fromAmount: $fromAmount, toAmount: $toAmount)
+                        
+                        FromToCurrencyLineMark(fromCurrency: fromCurrency, toCurrency: toCurrency)
+                        
+                        GridRow {
+                            CurrencyInfoCard(currency: fromCurrency)
+                            //                        Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
                             
-                            CurrencyConvertCard(fromCurrency: fromCurrency, toCurrency: toCurrency, fromAmount: $fromAmount, toAmount: $toAmount)
-                            
-                            FromToCurrencyLineMark(fromCurrency: fromCurrency, toCurrency: toCurrency)
-                            
-                            GridRow {
-                                CurrencyInfoCard(currency: fromCurrency)
-                                //                        Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
-                                
-                                CurrencyInfoCard(currency: toCurrency)
-                            }
-                            
-                            //                        tempCardMarking()
-                            ConversionResultsSection()
-                            
+                            CurrencyInfoCard(currency: toCurrency)
                         }
+                        
+                        //                        tempCardMarking()
+                        ConversionResultsSection(selectedTab: $selectedTab)
+                        
                     }
-                    .padding()
                 }
-                
+                .padding()
             }
+            
         }
-        
         
     }
     @ViewBuilder
