@@ -60,12 +60,14 @@ struct SettingView: View {
                     
                     // Radio Button
                     Image(systemName: themeManager.currentTheme == theme ? "checkmark.circle.fill" : "circle")
+                        .font(.system(size: 25))
                         .foregroundColor(ThemeConstants.PRIMARY_COLOR)
-                        .onTapGesture {
-                            themeManager.updateTheme(theme)
-                        }
+
                 }
                 .modifier(SecondaryBackgroundCardStyle())
+                .onTapGesture {
+                    themeManager.updateTheme(theme)
+                }
             }
         }
         
