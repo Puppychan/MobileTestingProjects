@@ -52,6 +52,23 @@ struct TimeseriesResponse: Codable, Equatable {
         return exchangeRates.sorted { $0.date < $1.date }
     }
     
+    /// Converts the `TimeseriesResponse` into an array of `CurrencyRateModel` objects.
+    /// - Returns: An array of `CurrencyRateModel` containing all rates for all dates and currencies.
+    func toCurrencyRateModels() -> [CurrencyRateModel] {
+        var models: [CurrencyRateModel] = []
+        
+        for (dateString, rateDictionary) in rates {
+            if let date = fromTimestamptzToDate(dateString) {
+                for (currencyCode, rate) in rateDictionary {
+                    let model = CurrencyRateModel(date: date, currencyCode: currencyCode, rate: rate)
+                    models.append(model)
+                }
+            }
+        }
+        
+        return models.sorted { $0.date < $1.date } // Sort by date
+    }
+    
     static func decodeJson(renderedJson: String) {
         let jsonData = renderedJson.data(using: .utf8)!
         

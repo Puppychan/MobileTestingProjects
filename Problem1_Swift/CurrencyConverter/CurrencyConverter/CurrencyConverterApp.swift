@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct CurrencyConverterApp: App {
+    @StateObject private var themeManager = ThemeManager()
+
     init() {
         // Ensure CurrencyFlagManager loads the JSON when the app starts
         _ = CurrencyFlagManager.shared
@@ -17,6 +19,7 @@ struct CurrencyConverterApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(themeManager)
                 .environmentObject(CurrencyViewModel()) // Provide CurrencyViewModel globally
 
         }

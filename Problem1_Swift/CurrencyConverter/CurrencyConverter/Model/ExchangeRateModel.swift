@@ -7,6 +7,7 @@
 
 import Foundation
 struct ExchangeRateModel: Identifiable {
+    // This is for Line chart
     let id = UUID()
     let date: Date
     let rate: Double
