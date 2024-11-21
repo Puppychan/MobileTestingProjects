@@ -45,6 +45,7 @@
 		3D9C703B2CEEF6C20080585D /* BorderCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C703A2CEEF6C20080585D /* BorderCardStyle.swift */; };
 		3D9C703E2CEEF87F0080585D /* SettingUserPreferenceSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C703D2CEEF87F0080585D /* SettingUserPreferenceSection.swift */; };
 		3D9C70412CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C70402CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift */; };
+		601F78DC2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601F78DB2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift */; };
 		602BDC0E2CEDD3C800C5455D /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602BDC0D2CEDD3C800C5455D /* CustomDateFormatter.swift */; };
 		602BDC162CEDDA9A00C5455D /* final_currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 602BDC152CEDDA9A00C5455D /* final_currencies.json */; };
 		602BDC172CEDDA9A00C5455D /* final_currencies.json in Resources */ = {isa = PBXBuildFile; fileRef = 602BDC152CEDDA9A00C5455D /* final_currencies.json */; };
@@ -114,6 +115,7 @@
 		3D9C703A2CEEF6C20080585D /* BorderCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderCardStyle.swift; sourceTree = "<group>"; };
 		3D9C703D2CEEF87F0080585D /* SettingUserPreferenceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUserPreferenceSection.swift; sourceTree = "<group>"; };
 		3D9C70402CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleCurrenciesSelectionSheet.swift; sourceTree = "<group>"; };
+		601F78DB2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryBackgroundCardStyle.swift; sourceTree = "<group>"; };
 		602BDC0D2CEDD3C800C5455D /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
 		602BDC152CEDDA9A00C5455D /* final_currencies.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = final_currencies.json; sourceTree = "<group>"; };
 		602BDC192CEDF61100C5455D /* CurrencyChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyChartViewModel.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				3D9C703A2CEEF6C20080585D /* BorderCardStyle.swift */,
+				601F78DB2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				3D6A6CBD2CE85AE00094F12B /* Constants.swift in Sources */,
 				3D9C70262CED97810080585D /* FromToCurrencyLineMark.swift in Sources */,
 				3D9C70322CEED3260080585D /* CurrencyRateModel.swift in Sources */,
+				601F78DC2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift in Sources */,
 				3D9C70362CEEDDA20080585D /* UserPreferencesViewModel.swift in Sources */,
 				602BDC0E2CEDD3C800C5455D /* CustomDateFormatter.swift in Sources */,
 				3D9C70082CEA4FB20080585D /* CurrencyFlagModel.swift in Sources */,

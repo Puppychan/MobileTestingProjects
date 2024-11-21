@@ -50,7 +50,6 @@ struct CurrencyInputField: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .stroke(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .leading, endPoint: .trailing), lineWidth: isFocused ? 4 : 2)
-                .background(ThemeConstants.BACKGROUND_COLOR)
                 .cornerRadius(10)
         )
         .onChange(of: amount) { newAmount in

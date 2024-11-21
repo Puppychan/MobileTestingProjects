@@ -65,9 +65,7 @@ struct SettingView: View {
                             themeManager.updateTheme(theme)
                         }
                 }
-                .padding()
-                .background(ThemeConstants.SECONDARY_COLOR)
-                .cornerRadius(10)
+                .modifier(SecondaryBackgroundCardStyle())
             }
         }
         
