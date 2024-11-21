@@ -9,6 +9,7 @@ import Foundation
 
 class CurrencyViewModel: ObservableObject {
     @Published var renderedLatestResponse: LatestRatesResponse?
+    @Published var renderedUserPrefererenceResponse: LatestRatesResponse?
     @Published var renderedCurrencies: [CurrencyFlagModel]?
     @Published var conversionResponse: ConversionResponse?
     @Published var renderedTimeseriesResponse: TimeseriesResponse?
@@ -20,6 +21,69 @@ class CurrencyViewModel: ObservableObject {
     }
     private func loadRenderedCurrencies() {
         self.renderedCurrencies = CurrencyFlagManager.shared.currencies
+    }
+    
+    func fetchUserPreferenceRates(
+        currencies: [String],
+        base: String? = "USD",
+        amount: Double? = 1
+    ) {
+        // Build the URL with query parameters
+        var urlComponents = URLComponents(
+            string: Constants.CURRENCY_API_URL + "latest"
+        )
+        var queryItems: [URLQueryItem] = []
+        queryItems.append(
+            URLQueryItem(
+                name: "currencies",
+                value: currencies.joined(
+                    separator: ","
+                )
+            )
+        )
+        
+        if let base = base {
+            queryItems.append(
+                URLQueryItem(
+                    name: "base",
+                    value: base
+                )
+            )
+        }
+        if let amount = amount {
+            queryItems.append(
+                URLQueryItem(
+                    name: "amount",
+                    value: String(
+                        amount
+                    )
+                )
+            )
+        }
+        
+        urlComponents?.queryItems = queryItems
+        guard let url = urlComponents?.url else {
+            self.errorMessage = "Invalid URL"
+            return
+        }
+        
+        NetworkingManager.shared.fetch(
+            from: url.absoluteString,
+            responseType: LatestRatesResponse.self
+        ) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(
+                    let response
+                ):
+                    self?.renderedUserPrefererenceResponse = response
+                case .failure(
+                    let error
+                ):
+                    self?.errorMessage = error.localizedDescription
+                }
+            }
+        }
     }
     
     func fetchLatestRates(

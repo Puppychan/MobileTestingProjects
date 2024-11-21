@@ -19,7 +19,7 @@ struct ContentView: View {
             HomeView(selectedTab: $selectedTab)
                 .tabItem { Label("Home", systemImage: "house.fill") }
                 .tag(Tab.home)
-            LatestRatesView()
+            LatestRatesView(selectedTab: $selectedTab)
                 .tabItem { Label("Rates", systemImage: "house.fill") }
                 .tag(Tab.rates)
             SettingView()

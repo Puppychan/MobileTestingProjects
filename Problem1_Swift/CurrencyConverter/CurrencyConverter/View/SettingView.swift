@@ -28,7 +28,6 @@ struct SettingView: View {
     
     var body: some View {
         NavigationView {
-            
             ScrollView(.vertical) {
                 ViewThatFits {
                     VStack(spacing: 10) {
@@ -62,7 +61,7 @@ struct SettingView: View {
                     Image(systemName: themeManager.currentTheme == theme ? "checkmark.circle.fill" : "circle")
                         .font(.system(size: 25))
                         .foregroundColor(ThemeConstants.PRIMARY_COLOR)
-
+                    
                 }
                 .modifier(SecondaryBackgroundCardStyle())
                 .onTapGesture {
@@ -72,7 +71,7 @@ struct SettingView: View {
         }
         
         SettingUserPreferenceSection()
-
+        
     }
     private var aboutMeSection: some View {
         
@@ -102,5 +101,5 @@ struct SettingView: View {
         .modifier(BorderCardStyle())
         
     }
-
+    
 }

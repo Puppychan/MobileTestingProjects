@@ -9,42 +9,59 @@ import Foundation
 import SwiftUI
 
 struct LatestRatesView: View {
-    @StateObject private var viewModel = CurrencyViewModel() // Initialize the ViewModel
+    @Binding var selectedTab: ContentView.Tab
+    
+    @EnvironmentObject var userPreferences: UserPreferencesViewModel
+    @EnvironmentObject var currencyViewModel: CurrencyViewModel
 
     var body: some View {
-        NavigationView {
-            VStack {
-//                if let errorMessage = viewModel.errorMessage {
-//                    // Show error message if any
-//                    Text("Error: \(errorMessage)")
-//                        .foregroundColor(.red)
-//                        .multilineTextAlignment(.center)
-//                        .padding()
-//                } else if viewModel.renderedLatestResponse == nil {
-//                    // Show a loading indicator while data is being fetched
-//                    ProgressView("Fetching latest rates...")
-//                        .padding()
-//                } else {
-//                    // Show the rates in a list
-//                    List(viewModel.rates.sorted(by: { $0.key < $1.key }), id: \.key) { currency, rate in
-//                        HStack {
-//                            Text(currency)
-//                                .font(.headline)
-//                            Spacer()
-//                            Text("\(rate, specifier: "%.4f")")
-//                                .font(.subheadline)
-//                        }
-//                    }
-//                }
+        ScrollView {
+            ViewThatFits {
+                VStack {
+                    
+                    ConversionResultsSection(selectedTab: $selectedTab)
+                }
+                .navigationTitle("Latest")
             }
-            .navigationTitle("Latest Rates")
-            .onAppear {
-                viewModel.fetchLatestRates() // Fetch the latest rates when the view appears
+        }
+        .onAppear {
+            fetchLatestRates()
+        }
+    }
+    
+    private var mainCurrencySection: some View {
+        VStack {
+            if let latestRates = currencyViewModel.renderedLatestResponse {
+                ForEach(userPreferences.targetCurrencies, id: \.code) { currency in
+                    if let rate = latestRates.rates[currency.code] {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("\(currency.name) (\(currency.code))")
+                                    .font(.headline)
+                                Text("\(userPreferences.baseCurrency.symbol) 1 = \(currency.symbol)\(rate.formatted(.number.precision(.fractionLength(2))))")
+                                    .font(.subheadline)
+                                    .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+                            }
+                            Spacer()
+                            CurrencyFlag(currencyFlag: currency.flag, size: 32)
+                        }
+                        .modifier(SecondaryBackgroundCardStyle())
+                    }
+                }
+            } else {
+                Text("Loading conversions...")
+                    .font(.subheadline)
+                    .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+                    .padding()
             }
         }
     }
-}
 
-#Preview {
-    LatestRatesView()
+    private func fetchLatestRates() {
+        let targetCodes = userPreferences.targetCurrencies.map { $0.code }
+        let baseCode = userPreferences.baseCurrency.code
+        currencyViewModel.fetchUserPreferenceRates(currencies: targetCodes, base: baseCode)
+        
+        currencyViewModel.fetchLatestRates(currencies: ["EUR", "JPY"])
+    }
 }

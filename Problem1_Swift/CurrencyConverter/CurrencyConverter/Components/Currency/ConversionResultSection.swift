@@ -49,7 +49,7 @@ struct ConversionResultsSection: View {
                         .font(.headline)
                         .foregroundColor(ThemeConstants.PRIMARY_COLOR)
                 }
-                .padding(10)
+                .padding(7)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(ThemeConstants.PRIMARY_COLOR, lineWidth: 1)
@@ -58,7 +58,7 @@ struct ConversionResultsSection: View {
             .padding(.bottom, 10)
             
             
-            if let latestRates = currencyViewModel.renderedLatestResponse {
+            if let latestRates = currencyViewModel.renderedUserPrefererenceResponse {
                 ForEach(userPreferences.targetCurrencies, id: \.code) { currency in
                     if let rate = latestRates.rates[currency.code] {
                         HStack {
@@ -93,7 +93,7 @@ struct ConversionResultsSection: View {
         let targetCodes = userPreferences.targetCurrencies.map { $0.code }
         let baseCode = userPreferences.baseCurrency.code
         
-        currencyViewModel.fetchLatestRates(currencies: targetCodes, base: baseCode)
+        currencyViewModel.fetchUserPreferenceRates(currencies: targetCodes, base: baseCode)
         
         
         
