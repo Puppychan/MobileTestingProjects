@@ -10,9 +10,7 @@ import SwiftUI
 struct SettingUserPreferenceSection: View {
     @EnvironmentObject var userPreferences: UserPreferencesViewModel
     @EnvironmentObject var currencyViewModel: CurrencyViewModel
-    @State private var showingBaseCurrencyPicker = false
-    @State private var showingTargetCurrencyPicker = false
-    var availableCurrencies: [String] = ["USD", "EUR", "JPY", "GBP", "CAD"] // Example currency list
+    
     var body: some View {
         SettingSectionCard(title: "User Preferences") {
             VStack(alignment: .leading, spacing: 10) {
@@ -36,36 +34,8 @@ struct SettingUserPreferenceSection: View {
                     Spacer()
                 }
                 
-                VStack(alignment: .leading, spacing: 5) {
-                    ForEach(userPreferences.targetCurrencies, id: \.code) { currency in
-                        HStack {
-                            if let flag = currency.flag {
-                                CurrencyFlag(currencyFlag: flag, size: 20)
-                            }
-                            Text("\(currency.name) (\(currency.code))")
-                                .font(.subheadline)
-                        }
-                        .padding(.vertical, 2)
-                    }
-                }
+                MultipleCurrenciesPicker(selectedCurrencies: $userPreferences.targetCurrencies, availableCurrencies: currencyViewModel.renderedCurrencies ?? [])
                 
-                Button(action: {
-                    showingTargetCurrencyPicker = true
-                }) {
-                    HStack {
-                        Image(systemName: "plus.circle")
-                        Text("Add/Remove Target Currencies")
-                            .font(.subheadline)
-                    }
-                }
-                .sheet(isPresented: $showingTargetCurrencyPicker) {
-//                    MultiCurrencyPickerView(
-//                        selectedCurrencies: $userPreferences.targetCurrencies,
-//                        availableCurrencies: currencyViewModel.renderedCurrencies ?? [],
-//                        title: "Select Target Currencies"
-//                    )
-                    MultipleCurrenciesSelectionSheet(selectedCurrencies: $userPreferences.targetCurrencies, availableCurrencies: currencyViewModel.renderedCurrencies ?? [])
-                }
             }
         }
     }
@@ -74,9 +44,9 @@ struct SettingUserPreferenceSection: View {
 struct CurrencyPicker: View {
     @Binding var selectedCurrency: CurrencyFlagModel
     let availableCurrencies: [CurrencyFlagModel]
-
+    
     @State private var isSheetPresented = false
-
+    
     var body: some View {
         Button(action: {
             isSheetPresented.toggle()
@@ -115,56 +85,38 @@ struct CurrencyPicker: View {
     }
 }
 
-struct MultiCurrencyPickerView: View {
+struct MultipleCurrenciesPicker: View {
     @Binding var selectedCurrencies: [CurrencyFlagModel]
     let availableCurrencies: [CurrencyFlagModel]
-    let title: String
-
-    @Environment(\.dismiss) private var dismiss
-
+    
+    @State private var isSheetPresented = false
+    
     var body: some View {
-        NavigationView {
-            List(availableCurrencies, id: \.code) { currency in
-                MultipleSelectionRow(
-                    title: "\(currency.name) (\(currency.code))",
-                    isSelected: selectedCurrencies.contains(where: { $0.code == currency.code })
-                ) {
-                    if let index = selectedCurrencies.firstIndex(where: { $0.code == currency.code }) {
-                        selectedCurrencies.remove(at: index)
-                    } else {
-                        selectedCurrencies.append(currency)
+        VStack(alignment: .leading, spacing: 5) {
+            ForEach(selectedCurrencies, id: \.code) { currency in
+                HStack {
+                    if let flag = currency.flag {
+                        CurrencyFlag(currencyFlag: flag, size: 20)
                     }
+                    Text("\(currency.name) (\(currency.code))")
+                        .font(.subheadline)
                 }
-            }
-            .navigationTitle(title)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Close") {
-                        dismiss()
-                    }
-                }
+                .padding(.vertical, 2)
             }
         }
-    }
-}
-
-struct MultipleSelectionRow: View {
-    var title: String
-    var isSelected: Bool
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
+        
+        Button(action: {
+            isSheetPresented.toggle()
+        }) {
             HStack {
-                Text(title)
-                    .foregroundColor(.primary)
-                Spacer()
-                if isSelected {
-                    Image(systemName: "checkmark")
-                        .foregroundColor(.blue)
-                }
+                Image(systemName: "plus.circle")
+                Text("Add/Remove Target Currencies")
+                    .font(.subheadline)
             }
-            .padding()
         }
+        .sheet(isPresented: $isSheetPresented) {
+            MultipleCurrenciesSelectionSheet(selectedCurrencies: $selectedCurrencies, availableCurrencies: availableCurrencies)
+        }
+        
     }
 }

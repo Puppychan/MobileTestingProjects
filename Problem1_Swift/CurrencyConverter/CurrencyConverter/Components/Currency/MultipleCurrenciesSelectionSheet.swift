@@ -58,17 +58,15 @@ struct MultipleCurrenciesSelectionSheet: View {
     @ViewBuilder
     private func ItemRow(currency: CurrencyFlagModel, isSelected: Bool) -> some View {
         HStack(spacing: 10) {
-            Text(currency.code)
+            CurrencyFlag(currencyFlag: currency.flag, size: 28)
             
-            VStack(alignment: .leading) {
-                Text(currency.name)
-                    .font(.body)
-                Text(currency.symbol)
-                    .font(.headline)
-            }
+            Text("\(currency.name) (\(currency.code))")
+                .font(.body)
+                .foregroundColor(ThemeConstants.TEXT_COLOR)
             Spacer()
             if isSelected {
                 Image(systemName: "checkmark")
+                    .frame(width: 32, height: 32)
                     .foregroundColor(ThemeConstants.PRIMARY_COLOR)
             }
         }
