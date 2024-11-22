@@ -82,6 +82,11 @@ struct CurrencyConvertCard: View {
         .background(LinearGradient(colors: [ThemeConstants.TERTIARY_COLOR.opacity(0.3), ThemeConstants.PRIMARY_COLOR.opacity(0.6)], startPoint: .topLeading, endPoint: .bottomTrailing).opacity(0.5))
         .cornerRadius(10)
         .shadow(radius: 5)
+        .onChange(of: viewModel.networkError) { error, oldResponse in
+            if let error = error {
+                handleError(error)
+            }
+        }
         //        .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
     }
     
