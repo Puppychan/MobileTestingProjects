@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MultipleCurrenciesSelectionSheet: View {
-    @Binding var selectedCurrencies: [CurrencyFlagModel]
+    @EnvironmentObject var userPreferenceViewModel: UserPreferencesViewModel
     let availableCurrencies: [CurrencyFlagModel]
     
     @Environment(\.dismiss) private var dismiss
@@ -34,20 +34,20 @@ struct MultipleCurrenciesSelectionSheet: View {
             ScrollViewReader { proxy in
                 List {
                     ForEach(filteredCurrencies, id: \.code) { currency in
-                        ItemRow(currency: currency, isSelected: selectedCurrencies.contains(where: { $0.code == currency.code }))
+                        ItemRow(currency: currency, isSelected: userPreferenceViewModel.targetCurrencies.contains(where: { $0.code == currency.code }))
                     }
                 }
                 
                 .onAppear {
                     // Scroll to the selected currency when the sheet appears
-                    proxy.scrollTo(selectedCurrencies[0].code, anchor: .center)
+                    proxy.scrollTo(userPreferenceViewModel.targetCurrencies[0].code, anchor: .center)
                 }
             }
             .searchable(text: $searchText)
             .navigationTitle("Select Currency")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button("Close") {
                         dismiss()
                     }
                 }
@@ -72,10 +72,12 @@ struct MultipleCurrenciesSelectionSheet: View {
         }
         .id(currency.code) // Assign a unique ID for scrolling
         .onTapGesture {
-            if let index = selectedCurrencies.firstIndex(where: { $0.code == currency.code }) {
-                selectedCurrencies.remove(at: index)
+            if userPreferenceViewModel.targetCurrencies.firstIndex(where: { $0.code == currency.code }) != nil {
+                //                selectedCurrencies.remove(at: index)
+                userPreferenceViewModel.removeCurrencyFromTargets(currency: currency)
             } else {
-                selectedCurrencies.append(currency)
+                //                selectedCurrencies.append(currency)
+                userPreferenceViewModel.addCurrencyToTargets(currency: currency)
             }
         }
         

@@ -37,6 +37,11 @@ class UserPreferencesViewModel: ObservableObject {
     
     func removeCurrencyFromTargets(currency: CurrencyFlagModel) {
         targetCurrencies.removeAll { $0 == currency }
+        print("Target currencies \(targetCurrencies)")
+        // Ensure at least one target currency remains; fallback to the default
+        if targetCurrencies.isEmpty {
+            targetCurrencies = [CurrencyFlagModel.defaultToCurrency]
+        }
     }
     
     // MARK: - UserDefaults Handling

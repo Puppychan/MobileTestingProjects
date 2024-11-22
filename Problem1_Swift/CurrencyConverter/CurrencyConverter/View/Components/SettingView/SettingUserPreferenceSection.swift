@@ -115,7 +115,7 @@ struct MultipleCurrenciesPicker: View {
             }
         }
         .sheet(isPresented: $isSheetPresented) {
-            MultipleCurrenciesSelectionSheet(selectedCurrencies: $selectedCurrencies, availableCurrencies: availableCurrencies)
+            MultipleCurrenciesSelectionSheet(availableCurrencies: availableCurrencies)
         }
         
     }
