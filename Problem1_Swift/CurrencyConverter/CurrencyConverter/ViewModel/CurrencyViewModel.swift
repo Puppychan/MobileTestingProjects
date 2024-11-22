@@ -9,83 +9,326 @@ import Foundation
 
 class CurrencyViewModel: ObservableObject {
     @Published var renderedLatestResponse: LatestRatesResponse?
-    @Published var renderedCurrencies: [String: CurrencyDetailModel]?
+    @Published var renderedUserPrefererenceResponse: LatestRatesResponse?
+    @Published var renderedCurrencies: [CurrencyFlagModel]?
     @Published var conversionResponse: ConversionResponse?
     @Published var renderedTimeseriesResponse: TimeseriesResponse?
     @Published var renderedHistoricalConversionResponse: HistoricalConversionResponse?
     @Published var errorMessage: String?
+    @Published var networkError: NetworkErrorEnum?
     
-    func fetchLatestRates() {
-        let url = Constants.CURRENCY_API_URL + "latest"
+    init() {
+        loadRenderedCurrencies()
+    }
+    private func loadRenderedCurrencies() {
+        self.renderedCurrencies = CurrencyFlagManager.shared.currencies
+    }
+    
+    private func resetError() {
+        self.errorMessage = nil
+        self.networkError = nil
+    }
+    
+    func fetchUserPreferenceRates(
+        currencies: [String],
+        base: String? = "USD",
+        amount: Double? = 1
+    ) {
+        resetError()
+        // Build the URL with query parameters
+        var urlComponents = URLComponents(
+            string: Constants.CURRENCY_API_URL + "latest"
+        )
+        var queryItems: [URLQueryItem] = []
+        queryItems.append(URLQueryItem(name: "currencies", value: currencies.joined(separator: ",")))
         
-        NetworkingManager.shared.fetch(from: url, responseType: LatestRatesResponse.self) { [weak self] result in
+        if let base = base {
+            queryItems.append(URLQueryItem(name: "base", value: base))
+        }
+        if let amount = amount {
+            queryItems.append(URLQueryItem(name: "amount", value: String(amount)))
+        }
+        
+        urlComponents?.queryItems = queryItems
+        guard let url = urlComponents?.url else {
+            self.errorMessage = "Invalid URL"
+            self.networkError = .invalidURL
+            return
+        }
+        
+        NetworkingManager.shared.fetch(
+            from: url.absoluteString,
+            responseType: LatestRatesResponse.self
+        ) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let response):
+                case .success(
+                    let response
+                ):
+                    self?.renderedUserPrefererenceResponse = response
+                case .failure(let error):
+                    self?.networkError = error
+                    self?.errorMessage = error.localizedDescription
+                }
+            }
+        }
+    }
+    
+    func fetchLatestRates(
+        currencies: [String]? = nil,
+        base: String? = "USD",
+        amount: Double? = 1,
+        places: Int? = nil,
+        format: String? = "json" // Default to "json"
+    ) {
+        resetError()
+        // Build the URL with query parameters
+        var urlComponents = URLComponents(
+            string: Constants.CURRENCY_API_URL + "latest"
+        )
+        var queryItems: [URLQueryItem] = []
+        
+        if let currencies = currencies {
+            queryItems.append(URLQueryItem(name: "currencies", value: currencies.joined(separator: ",")))
+        }
+        if let base = base {
+            queryItems.append(URLQueryItem(name: "base", value: base))
+        }
+        if let amount = amount {
+            queryItems.append(URLQueryItem(name: "amount", value: String(amount)))
+        }
+        if let places = places {
+            queryItems.append(URLQueryItem(name: "places", value: String(places)))
+        }
+        if let format = format {
+            queryItems.append(URLQueryItem(name: "format", value: format))
+        }
+        
+        urlComponents?.queryItems = queryItems
+        guard let url = urlComponents?.url else {
+            self.errorMessage = "Invalid URL"
+            self.networkError = .invalidURL
+            return
+        }
+        
+        NetworkingManager.shared.fetch(
+            from: url.absoluteString,
+            responseType: LatestRatesResponse.self
+        ) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(
+                    let response
+                ):
                     self?.renderedLatestResponse = response
                 case .failure(let error):
+                    self?.networkError = error
                     self?.errorMessage = error.localizedDescription
                 }
             }
         }
     }
     
-    func fetchCurrencies() {
-        let url = Constants.CURRENCY_API_URL + "currencies"
-        
-        NetworkingManager.shared.fetch(from: url, responseType: CurrenciesResponse.self) { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let response):
-                    self?.renderedCurrencies = response.currencies
-                case .failure(let error):
-                    self?.errorMessage = error.localizedDescription
-                }
-            }
-        }
-    }
+//    func fetchCurrencies() {
+//        let url = Constants.CURRENCY_API_URL + "currencies"
+//        
+//        NetworkingManager.shared.fetch(
+//            from: url,
+//            responseType: CurrenciesResponse.self
+//        ) { [weak self] result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(
+//                    let response
+//                ):
+//                    self?.renderedCurrencies = response.currencies
+//                case .failure(
+//                    let error
+//                ):
+//                    self?.errorMessage = error.localizedDescription
+//                }
+//            }
+//        }
+//    }
     
-    func convertCurrency(from: String, to: String, date: String, amount: Double, format: String = "json") {
-//        let url = Constants.CURRENCY_API_URL + "convert"
-        let url = "\(Constants.CURRENCY_API_URL)convert?from=\(from)&to=\(to)&amount=\(amount)&format=\(format)"
+    func convertCurrency(
+        from: String,
+        to: String,
+        amount: Double,
+        date: String? = nil,
+        places: Int? = nil,
+        format: String? = "json"
+    ) {
+        resetError()
+        //        let url = Constants.CURRENCY_API_URL + "convert"
+        // Build the URL with query parameters
+        var urlComponents = URLComponents(
+            string: Constants.CURRENCY_API_URL + "convert"
+        )
+        var queryItems: [URLQueryItem] = []
         
-        NetworkingManager.shared.fetch(from: url, responseType: ConversionResponse.self) { [weak self] result in
+        queryItems.append(URLQueryItem(name: "from", value: from))
+        queryItems.append(URLQueryItem(name: "to", value: to))
+        queryItems.append(URLQueryItem(name: "amount", value: String(amount)))
+        
+        if let date = date {
+            queryItems.append(URLQueryItem(name: "date", value: date))
+        }
+        if let places = places {
+            queryItems.append(URLQueryItem(name: "places", value: String(places)))
+        }
+        if let format = format {
+            queryItems.append(URLQueryItem(name: "format", value: format))
+        }
+        
+        urlComponents?.queryItems = queryItems
+        guard let url = urlComponents?.url else {
+            self.errorMessage = "Invalid URL"
+            self.networkError = .invalidURL
+            return
+        }
+        
+        NetworkingManager.shared.fetch(
+            from: url.absoluteString,
+            responseType: ConversionResponse.self
+        ) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
                     self?.conversionResponse = response
                 case .failure(let error):
+                    self?.networkError = error
                     self?.errorMessage = error.localizedDescription
                 }
             }
         }
     }
     
-    func fetchTimeseries() {
-        let url = Constants.CURRENCY_API_URL + "timeseries"
+    func fetchTimeseries(
+        startDate: String,
+        endDate: String,
+        accuracy: CurrencyAccuracyEnum? = CurrencyAccuracyEnum.day,
+        currencies: [String]? = nil,
+        base: String? = "USD",
+        places: Int? = nil,
+        format: String? = "json"
+    ) {
+        resetError()
+        //        let url = Constants.CURRENCY_API_URL + "timeseries"
+        // Initialize URL components
+        var urlComponents = URLComponents(
+            string: Constants.CURRENCY_API_URL + "timeseries"
+        )
+        var queryItems: [URLQueryItem] = []
         
-        NetworkingManager.shared.fetch(from: url, responseType: TimeseriesResponse.self) { [weak self] result in
+        // Required parameters
+        queryItems.append(URLQueryItem(name: "start_date", value: startDate))
+        queryItems.append(URLQueryItem(name: "end_date", value: endDate))
+        
+        // Optional parameters
+        if let accuracy = accuracy {
+            queryItems.append(URLQueryItem(name: "accuracy", value: accuracy.rawValue))
+        }
+        if let currencies = currencies {
+            queryItems.append(URLQueryItem(name: "currencies", value: currencies.joined(separator: ",")))
+        }
+        if let base = base {
+            queryItems.append(URLQueryItem(name: "base", value: base))
+        }
+        if let places = places {
+            queryItems.append(URLQueryItem(name: "places", value: String(places)))
+        }
+        if let format = format {
+            queryItems.append(URLQueryItem(name: "format", value: format))
+        }
+        
+        urlComponents?.queryItems = queryItems
+        
+        guard let url = urlComponents?.url else {
+            self.errorMessage = "Invalid URL"
+            self.networkError = .invalidURL
+            return
+        }
+        
+        NetworkingManager.shared.fetch(
+            from: url.absoluteString,
+            responseType: TimeseriesResponse.self
+        ) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
                     self?.renderedTimeseriesResponse = response
+//                    for currency in currencies {
+//                        self?.exchangeRates = response.getExchangeRates(for: currency)
+//                    }
+
                 case .failure(let error):
                     self?.errorMessage = error.localizedDescription
+                    self?.networkError = error
                 }
             }
         }
     }
     
-    func fetchHistoricalConversion() {
-        let url = Constants.CURRENCY_API_URL + "historical"
+    func fetchHistoricalConversion(
+        date: String? = nil,
+        base: String? = "USD",
+        currencies: [String]? = nil,
+        amount: Double? = 1,
+        places: Int? = nil,
+        format: String? = "json"
+    ) {
+        resetError()
+        //        let url = Constants.CURRENCY_API_URL + "historical"
+        // Initialize URL components
+        var urlComponents = URLComponents(
+            string: Constants.CURRENCY_API_URL + "historical"
+        )
+        var queryItems: [URLQueryItem] = []
+        queryItems.append(URLQueryItem(name: "api_key", value: Constants.CURRENCY_API_KEY))
         
-        NetworkingManager.shared.fetch(from: url, responseType: HistoricalConversionResponse.self) { [weak self] result in
+        // Required parameter (if date is provided)
+        if let date = date {
+            queryItems.append(URLQueryItem(name: "date", value: date))
+        }
+        
+        // Optional parameters
+        if let base = base {
+            queryItems.append(URLQueryItem(name: "base", value: base))
+        }
+        if let currencies = currencies {
+            queryItems.append(URLQueryItem(name: "currencies", value: currencies.joined(separator: ",")))
+        }
+        if let amount = amount {
+            queryItems.append(URLQueryItem(name: "amount", value: String(amount)))
+        }
+        if let places = places {
+            queryItems.append(URLQueryItem(name: "places", value: String(places)))
+        }
+        if let format = format {
+            queryItems.append(URLQueryItem(name: "format", value: format))
+        }
+        
+        urlComponents?.queryItems = queryItems
+        
+        // Ensure the final URL is valid
+        guard let url = urlComponents?.url else {
+            self.errorMessage = "Invalid URL"
+            self.networkError = .invalidURL
+            return
+        }
+        
+        NetworkingManager.shared.fetch(
+            from: url.absoluteString,
+            responseType: HistoricalConversionResponse.self
+        ) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
                     self?.renderedHistoricalConversionResponse = response
                 case .failure(let error):
                     self?.errorMessage = error.localizedDescription
+                    self?.networkError = error
                 }
             }
         }
