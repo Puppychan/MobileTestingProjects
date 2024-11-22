@@ -52,7 +52,7 @@ struct CurrencyInputField: View {
                 .stroke(LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .leading, endPoint: .trailing), lineWidth: isFocused ? 4 : 2)
                 .cornerRadius(10)
         )
-        .onChange(of: amount) { newAmount in
+        .onChange(of: amount) { newAmount, oldResponse in
             // Keep userInput in sync with amount changes
             // Only call to receive update outside the input field - Not focused field
             if (!isFocused) {
