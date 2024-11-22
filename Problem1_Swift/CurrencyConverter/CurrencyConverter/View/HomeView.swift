@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Binding var selectedTab: ContentView.Tab
+    
     @EnvironmentObject var userPreferences: UserPreferencesViewModel
     
-    @Binding var selectedTab: ContentView.Tab
     @State private var fromAmount: Double = 0
     @State private var toAmount: Double = 0
     

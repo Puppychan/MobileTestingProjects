@@ -47,7 +47,7 @@ struct TimeseriesResponse: Codable, Equatable {
             }
         }
         
-        print("Response inside getExchangeRates \(exchangeRates)")
+        // print("Response inside getExchangeRates \(exchangeRates)")
         
         return exchangeRates.sorted { $0.date < $1.date }
     }

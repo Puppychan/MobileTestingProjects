@@ -40,6 +40,13 @@ struct FromToCurrencyLineMark: View {
                     .symbol(Circle())
                     .interpolationMethod(.catmullRom)
                 }
+                .chartScrollableAxes(.horizontal)
+                .chartScrollTargetBehavior(
+                    .valueAligned(
+                        matching: DateComponents(minute: 0),
+                        majorAlignment: .matching(DateComponents(hour: 0))
+                    )
+                )
                 .chartYScale(domain: minRate...maxRate) // Scale based on min and max
                 .frame(height: 300)
                 .padding()
@@ -52,13 +59,13 @@ struct FromToCurrencyLineMark: View {
         .onAppear() {
             fetchTimeseriesCurrencies()
         }
-        .onChange(of: fromCurrency) { _ in
+        .onChange(of: fromCurrency) { oldResponse, newResponse in
             fetchTimeseriesCurrencies()
         }
-        .onChange(of: toCurrency) { _ in
+        .onChange(of: toCurrency) { oldResponse, newResponse in
             fetchTimeseriesCurrencies()
         }
-        .onChange(of: viewModel.renderedTimeseriesResponse) { newResponse in
+        .onChange(of: viewModel.renderedTimeseriesResponse) { oldResponse, newResponse in
             if let response = newResponse {
                 chartViewModel.fetchExchangeRates(from: response, for: toCurrency.code)
             }

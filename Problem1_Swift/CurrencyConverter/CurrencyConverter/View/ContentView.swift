@@ -20,7 +20,7 @@ struct ContentView: View {
                 .tabItem { Label("Home", systemImage: "house.fill") }
                 .tag(Tab.home)
             LatestRatesView(selectedTab: $selectedTab)
-                .tabItem { Label("Rates", systemImage: "house.fill") }
+                .tabItem { Label("Rates", systemImage: "chart.bar") }
                 .tag(Tab.rates)
             SettingView()
                 .tabItem { Label("Settings", systemImage: "gearshape") }
