@@ -24,6 +24,7 @@ struct LatestRatesView: View {
                 VStack {
                     mainCurrencySection
                     mainCurrencyChart
+                    CustomDivider()
                     ConversionResultsSection(selectedTab: $selectedTab)
                 }
                 .padding()
