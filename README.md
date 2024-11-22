@@ -1,13 +1,18 @@
-<h1>Testing Project</h1>
+# Testing Project
 - This repository contains the iOS applications and problem 2 answers.
 - This repository is done by [Nhung Tran](https://www.linkedin.com/in/nhungtr)
-
+  
 - Below is general project folder structure:
 ``` bash
 MobileTestingProjects/
-├── Problem1_Swift/       # Currency Converter Application
-├── Problem2/             # Problem 2 Answers
-
+├── Problem1_Swift/             # Currency Converter Application
+│   ├── CurrencyConverter/      # Currency Converter Application
+├── Problem2a/                  # Problem 2a answers
+├── Problem2b/                  # Problem 2b answers
+├── Supporting/                 # For formatting currency list data from 2 sources by python file
+│   ├── convert_currency_data.py
+├── SupportingAttachments       # For storing images like Logo for the application
+└── README.md                   # Project README file
 ```
 
 
@@ -94,3 +99,37 @@ CurrencyConverter/
 - Add more user interactions and animations to enhance the user experience.
 - Implement a search feature to allow users to search for specific currencies in the past.
 
+# 📂 Problem 2: Testing Code
+This section contains the answers to Problem 2a and Problem 2b.
+## Problem 2a
+- Folder explanation:
+  - **problem2a.py**: main file for problem 2a
+  - **helpers**: define helpers functions handling business logic for solving the problem
+  - **product_model**: define Product class
+  - **product_menu**: building menu for user to interact with the program and improve user experience
+- To run:
+  - On MacOs:
+    - Open the terminal
+    - From root of the project, run `cd Problem2a`
+    - `python3.10 problem2a.py`
+
+## Problem 2b
+- Folder explanation:
+  - **problem2b.py**: main file for problem 2b
+- To run:
+  - On MacOs: 
+    - Open the terminal
+    - From root of the project, run `cd Problem2b`
+    - `python3.10 problem2b.py`
+
+## Supporting folder
+- Folder explanation:
+  - **convert_currency_data.py**: Python file to convert and format currency data from 2 sources
+  - **flag_currencies.json**: JSON file containing currency data with flag - from FXRates API
+  - **rendered_currencies.json**: JSON file containing currency data with flag - from Github
+  => **final_currencies.json**: JSON file containing merged currency data from 2 sources - used in the application
+- To run:
+  - On MacOs:
+    - Open the terminal
+    - From root of the project, run `cd Supporting`
+    - `python3.10 convert_currency_data.py`
