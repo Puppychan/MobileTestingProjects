@@ -1,6 +1,7 @@
 # Testing Project
 - This repository contains the iOS applications and problem 2 answers.
 - This repository is done by [Nhung Tran](https://www.linkedin.com/in/nhungtr)
+  <a href="https://github.com/Puppychan"><img src="https://github-readme-stats.vercel.app/api?username=Puppychan&theme=aura_dark&show_icons=true&count_private=true" alt="GitHub Readme Stats" /></a>
   
 - Below is general project folder structure:
 ``` bash
