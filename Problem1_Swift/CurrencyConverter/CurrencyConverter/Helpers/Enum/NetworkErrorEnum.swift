@@ -7,7 +7,7 @@
 
 import Foundation
 // Enum to define network-related errors
-enum NetworkErrorEnum: Error, LocalizedError {
+enum NetworkErrorEnum: Error, LocalizedError, Equatable {
     case invalidURL
     case noInternetConnection
     case noData

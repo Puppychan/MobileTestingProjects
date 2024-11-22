@@ -46,14 +46,10 @@ struct HomeView: View {
                         
                         GridRow {
                             CurrencyInfoCard(currency: fromCurrency)
-                            //                        Color.clear.gridCellUnsizedAxes([.horizontal, .vertical])
                             
                             CurrencyInfoCard(currency: toCurrency)
                         }
-                        
-                        //                        tempCardMarking()
                         ConversionResultsSection(selectedTab: $selectedTab)
-                        
                     }
                 }
                 .padding()
@@ -61,14 +57,6 @@ struct HomeView: View {
             
         }
         
-    }
-    @ViewBuilder
-    private func tempCardMarking() -> some View {
-        Rectangle()
-            .foregroundColor(ThemeConstants.BACKGROUND_COLOR)
-            .cornerRadius(10)
-            .frame(maxWidth: .infinity, idealHeight: 100)
-            .shadow(radius: 3)
     }
 }
 

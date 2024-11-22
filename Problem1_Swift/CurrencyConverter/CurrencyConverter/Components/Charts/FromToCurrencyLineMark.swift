@@ -21,6 +21,11 @@ struct FromToCurrencyLineMark: View {
     
     var body: some View {
         VStack {
+//            if let networkError = viewModel.networkError {
+//                Text("Error: \(networkError.localizedDescription)")
+//            } else {
+//                Text("No Error")
+//            }
             Text("Exchange Rates for \(toCurrency.code) - \(toCurrency.name)")
                 .font(.headline)
                 .multilineTextAlignment(.center)
@@ -28,33 +33,38 @@ struct FromToCurrencyLineMark: View {
             Text("Base Currency: \(fromCurrency.code) - \(fromCurrency.name)")
                 .multilineTextAlignment(.center)
                 .font(.subheadline)
-            if !chartViewModel.exchangeRates.isEmpty {
-                let minRate = chartViewModel.exchangeRates.map { $0.rate }.min() ?? 0
-                let maxRate = chartViewModel.exchangeRates.map { $0.rate }.max() ?? 0
-                
-                Chart(chartViewModel.exchangeRates) {
-                    LineMark(
-                        x: .value("Date", $0.date),
-                        y: .value("Rate", $0.rate)
-                    )
-                    .symbol(Circle())
-                    .interpolationMethod(.catmullRom)
+            HandleErrorWrap(networkError: viewModel.networkError) {
+                Group {
+                    if !chartViewModel.exchangeRates.isEmpty {
+                        let minRate = chartViewModel.exchangeRates.map { $0.rate }.min() ?? 0
+                        let maxRate = chartViewModel.exchangeRates.map { $0.rate }.max() ?? 0
+                        
+                        Chart(chartViewModel.exchangeRates) {
+                            LineMark(
+                                x: .value("Date", $0.date),
+                                y: .value("Rate", $0.rate)
+                            )
+                            .symbol(Circle())
+                            .interpolationMethod(.catmullRom)
+                        }
+                        .chartScrollableAxes(.horizontal)
+                        .chartScrollTargetBehavior(
+                            .valueAligned(
+                                matching: DateComponents(minute: 0),
+                                majorAlignment: .matching(DateComponents(hour: 0))
+                            )
+                        )
+                        .chartYScale(domain: minRate...maxRate) // Scale based on min and max
+                        .frame(height: 300)
+                        .padding()
+                    } else {
+                        Text("Loading data...")
+                            .font(.subheadline)
+                            .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+                    }
                 }
-                .chartScrollableAxes(.horizontal)
-                .chartScrollTargetBehavior(
-                    .valueAligned(
-                        matching: DateComponents(minute: 0),
-                        majorAlignment: .matching(DateComponents(hour: 0))
-                    )
-                )
-                .chartYScale(domain: minRate...maxRate) // Scale based on min and max
-                .frame(height: 300)
-                .padding()
-            } else {
-                Text("Loading data...")
-                    .font(.subheadline)
-                    .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
             }
+            
         }
         .onAppear() {
             fetchTimeseriesCurrencies()

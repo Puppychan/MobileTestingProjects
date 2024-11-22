@@ -57,29 +57,32 @@ struct ConversionResultsSection: View {
             }
             .padding(.bottom, 10)
             
-            
-            if let latestRates = currencyViewModel.renderedUserPrefererenceResponse {
-                ForEach(userPreferences.targetCurrencies, id: \.code) { currency in
-                    if let rate = latestRates.rates[currency.code] {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("\(currency.name) (\(currency.code))")
-                                    .font(.headline)
-                                Text("\(userPreferences.baseCurrency.symbol) 1 = \(currency.symbol)\(rate.formatted(.number.precision(.fractionLength(2))))")
-                                    .font(.subheadline)
-                                    .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+            HandleErrorWrap(networkError: currencyViewModel.networkError) {
+                Group {
+                    if let latestRates = currencyViewModel.renderedUserPrefererenceResponse {
+                        ForEach(userPreferences.targetCurrencies, id: \.code) { currency in
+                            if let rate = latestRates.rates[currency.code] {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        Text("\(currency.name) (\(currency.code))")
+                                            .font(.headline)
+                                        Text("\(userPreferences.baseCurrency.symbol) 1 = \(currency.symbol)\(rate.formatted(.number.precision(.fractionLength(2))))")
+                                            .font(.subheadline)
+                                            .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+                                    }
+                                    Spacer()
+                                    CurrencyFlag(currencyFlag: currency.flag, size: 32)
+                                }
+                                .modifier(SecondaryBackgroundCardStyle())
                             }
-                            Spacer()
-                            CurrencyFlag(currencyFlag: currency.flag, size: 32)
                         }
-                        .modifier(SecondaryBackgroundCardStyle())
+                    } else {
+                        Text("Loading conversions...")
+                            .font(.subheadline)
+                            .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+                            .padding()
                     }
                 }
-            } else {
-                Text("Loading conversions...")
-                    .font(.subheadline)
-                    .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
-                    .padding()
             }
         }
         .modifier(BorderCardStyle())

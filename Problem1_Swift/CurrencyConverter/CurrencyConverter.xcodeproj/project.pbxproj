@@ -45,6 +45,7 @@
 		3D9C703B2CEEF6C20080585D /* BorderCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C703A2CEEF6C20080585D /* BorderCardStyle.swift */; };
 		3D9C703E2CEEF87F0080585D /* SettingUserPreferenceSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C703D2CEEF87F0080585D /* SettingUserPreferenceSection.swift */; };
 		3D9C70412CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C70402CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift */; };
+		3D9C70432CF071CA0080585D /* HandleErrorWrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9C70422CF071CA0080585D /* HandleErrorWrap.swift */; };
 		601F78DC2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601F78DB2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift */; };
 		601F78DE2CEF41CE00C051AC /* ConversionResultSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601F78DD2CEF41CE00C051AC /* ConversionResultSection.swift */; };
 		602BDC0E2CEDD3C800C5455D /* CustomDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602BDC0D2CEDD3C800C5455D /* CustomDateFormatter.swift */; };
@@ -116,6 +117,7 @@
 		3D9C703A2CEEF6C20080585D /* BorderCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderCardStyle.swift; sourceTree = "<group>"; };
 		3D9C703D2CEEF87F0080585D /* SettingUserPreferenceSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingUserPreferenceSection.swift; sourceTree = "<group>"; };
 		3D9C70402CEF0DA40080585D /* MultipleCurrenciesSelectionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleCurrenciesSelectionSheet.swift; sourceTree = "<group>"; };
+		3D9C70422CF071CA0080585D /* HandleErrorWrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleErrorWrap.swift; sourceTree = "<group>"; };
 		601F78DB2CEF3ABD00C051AC /* SecondaryBackgroundCardStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryBackgroundCardStyle.swift; sourceTree = "<group>"; };
 		601F78DD2CEF41CE00C051AC /* ConversionResultSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionResultSection.swift; sourceTree = "<group>"; };
 		602BDC0D2CEDD3C800C5455D /* CustomDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDateFormatter.swift; sourceTree = "<group>"; };
@@ -297,6 +299,7 @@
 				602BDC1B2CEDFCF700C5455D /* Charts */,
 				3D9C701C2CECA7350080585D /* Card */,
 				3D9C702D2CEE3DE30080585D /* ImageNetwork.swift */,
+				3D9C70422CF071CA0080585D /* HandleErrorWrap.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				3D6A6C7C2CE773650094F12B /* CurrencyConverterApp.swift in Sources */,
 				3D9C70102CEA65300080585D /* HandleImage.swift in Sources */,
 				3D6A6CD92CE910B10094F12B /* CurrencyInputField.swift in Sources */,
+				3D9C70432CF071CA0080585D /* HandleErrorWrap.swift in Sources */,
 				3D9C702A2CEE21D80080585D /* SettingView.swift in Sources */,
 				3D9C70302CEE47C20080585D /* ThemeManager.swift in Sources */,
 				3D6A6CBF2CE89B600094F12B /* LatestRatesResponse.swift in Sources */,
@@ -695,6 +699,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CurrencyConverter/CurrencyConverter.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -720,6 +725,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = matsuriproject.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -734,6 +740,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = CurrencyConverter/CurrencyConverter.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -759,6 +766,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = matsuriproject.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
