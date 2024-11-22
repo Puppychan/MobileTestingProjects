@@ -54,7 +54,7 @@ struct LatestRatesView: View {
                         .font(.body)
                         .foregroundColor(ThemeConstants.TEXT_COLOR)
                 }
-                Divider()
+                CustomDivider()
                 Text("Below are the latest conversion rates:")
                     .font(.subheadline)
                     .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)

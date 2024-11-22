@@ -29,7 +29,7 @@ struct ConversionResultsSection: View {
                         .font(.body)
                         .foregroundColor(ThemeConstants.TEXT_COLOR)
                 }
-                Divider()
+                CustomDivider()
                 Text("Below are conversions based on your selected target currencies from your preferences.")
                     .multilineTextAlignment(.leading)
                     .font(.subheadline)

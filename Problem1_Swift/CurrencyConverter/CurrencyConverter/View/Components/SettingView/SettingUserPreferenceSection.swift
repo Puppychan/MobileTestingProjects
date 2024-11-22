@@ -25,7 +25,7 @@ struct SettingUserPreferenceSection: View {
                     availableCurrencies: currencyViewModel.renderedCurrencies ?? []
                 )
                 
-                Divider()
+                CustomDivider()
                     .padding(.vertical)
                 
                 HStack {

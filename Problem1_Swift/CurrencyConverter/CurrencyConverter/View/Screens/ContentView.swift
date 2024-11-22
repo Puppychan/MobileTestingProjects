@@ -15,18 +15,32 @@ struct ContentView: View {
     }
     
     var body: some View {
-        TabView(selection: $selectedTab) {
-            HomeView(selectedTab: $selectedTab)
-                .tabItem { Label("Home", systemImage: "house.fill") }
-                .tag(Tab.home)
-            LatestRatesView(selectedTab: $selectedTab)
-                .tabItem { Label("Rates", systemImage: "chart.bar") }
-                .tag(Tab.rates)
-            SettingView()
-                .tabItem { Label("Settings", systemImage: "gearshape") }
-                .tag(Tab.settings)
+        ZStack {
+            TabView(selection: $selectedTab) {
+                HomeView(selectedTab: $selectedTab)
+                    .tabItem { Label("Home", systemImage: "house.fill") }
+                    .tag(Tab.home)
+                LatestRatesView(selectedTab: $selectedTab)
+                    .tabItem { Label("Rates", systemImage: "chart.bar") }
+                    .tag(Tab.rates)
+                SettingView()
+                    .tabItem { Label("Settings", systemImage: "gearshape") }
+                    .tag(Tab.settings)
+            }
+            .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
+            .accentColor(ThemeConstants.TERTIARY_COLOR)
         }
-        .foregroundColor(ThemeConstants.SECONDARY_TEXT_COLOR)
-        .accentColor(ThemeConstants.TERTIARY_COLOR)
+        .onTapGesture {
+            hideKeyboard()
+        }
+    }
+}
+
+extension View {
+    /// Dismiss the keyboard globally
+    func hideKeyboard() {
+        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            scene.keyWindow?.endEditing(true)
+        }
     }
 }

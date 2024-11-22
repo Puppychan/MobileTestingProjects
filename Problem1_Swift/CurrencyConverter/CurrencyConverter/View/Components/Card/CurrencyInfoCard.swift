@@ -29,7 +29,7 @@ struct CurrencyInfoCard: View {
                 labelText("Country Name")
             }
             
-            Divider()
+            CustomDivider()
             HStack {
                 Text("\(currency.symbol) \(currency.code)")
                     .font(.body)

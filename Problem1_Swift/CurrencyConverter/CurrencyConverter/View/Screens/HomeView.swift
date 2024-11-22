@@ -46,7 +46,7 @@ struct HomeView: View {
                         
                         CurrencyConvertCard(fromCurrency: $fromCurrency, toCurrency: $toCurrency, fromAmount: $fromAmount, toAmount: $toAmount)
                         
-                        Divider()
+                        CustomDivider()
                         
                         FromToCurrencyLineMark(fromCurrency: $fromCurrency, toCurrency: $toCurrency)
                         
@@ -55,7 +55,7 @@ struct HomeView: View {
                             
                             CurrencyInfoCard(currency: $toCurrency)
                         }
-                        Divider()
+                        CustomDivider()
                         ConversionResultsSection(selectedTab: $selectedTab)
                     }
                 }
