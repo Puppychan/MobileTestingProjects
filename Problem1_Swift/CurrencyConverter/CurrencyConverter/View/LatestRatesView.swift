@@ -15,6 +15,9 @@ struct LatestRatesView: View {
     @EnvironmentObject var currencyViewModel: CurrencyViewModel
     @StateObject var chartViewModel: CurrencyChartViewModel = CurrencyChartViewModel()
     
+    let globalBaseCurrency: String = "USD"
+    let globalCurrencyList: [String] = ["EUR", "JPY", "GBP", "CAD", "SGD"]
+    
     var body: some View {
         ScrollView(.vertical) {
             ViewThatFits {
@@ -96,7 +99,7 @@ struct LatestRatesView: View {
         HandleErrorWrap(networkError: currencyViewModel.networkError) {
             Group {
                 if ((currencyViewModel.renderedTimeseriesResponse != nil) && (currencyViewModel.renderedLatestResponse != nil)) {
-                    MultiCurrencyLineChart(currencies: ["EUR", "JPY", "GBP", "CAD", "SGD"])
+                    MultiCurrencyLineChart(chartViewModel: chartViewModel, currencies: globalCurrencyList, baseCurrency: globalBaseCurrency)
                 } else {
                     Text("Loading chart...")
                         .font(.subheadline)
@@ -108,8 +111,7 @@ struct LatestRatesView: View {
     }
     
     private func fetchLatestRates() {
-        let currencyList = ["EUR", "JPY", "GBP", "CAD", "SGD"]
-        currencyViewModel.fetchLatestRates(currencies: currencyList)
-        currencyViewModel.fetchTimeseries(startDate: getTimestamptz(30), endDate: getTimestamptz(), currencies: currencyList)
+        currencyViewModel.fetchLatestRates(currencies: globalCurrencyList)
+        currencyViewModel.fetchTimeseries(startDate: getTimestamptz(30), endDate: getTimestamptz(), currencies: globalCurrencyList)
     }
 }

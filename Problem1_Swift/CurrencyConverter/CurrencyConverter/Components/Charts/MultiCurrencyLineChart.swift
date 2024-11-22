@@ -9,13 +9,10 @@ import SwiftUI
 import Charts
 
 struct MultiCurrencyLineChart: View {
-    @EnvironmentObject var viewModel: CurrencyViewModel
-    @StateObject var chartViewModel: CurrencyChartViewModel = CurrencyChartViewModel()
-    @State private var isLoading: Bool = true
-    @State private var errorMessage: String?
+    @StateObject var chartViewModel: CurrencyChartViewModel
     
     let currencies: [String] // List of currencies to display
-    let baseCurrency: String = "USD" // Fixed base currency for the chart
+    let baseCurrency: String
     
     var body: some View {
         VStack {
@@ -24,16 +21,8 @@ struct MultiCurrencyLineChart: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
             
-            if isLoading {
-                ProgressView("Loading data...")
-                    .padding()
-            } else if let errorMessage = errorMessage {
-                Text("Error: \(errorMessage)")
-                    .foregroundColor(.red)
-                    .multilineTextAlignment(.center)
-                    .padding()
-            } else if !chartViewModel.currencyRates.isEmpty {
-                ScrollView(.horizontal) {
+            if !chartViewModel.currencyRates.isEmpty {
+//                ScrollView(.horizontal) {
                     Chart {
                         ForEach(currencies, id: \.self) { currency in
                             let normalizedData = normalizedCurrencyRates(for: currency)
@@ -47,37 +36,24 @@ struct MultiCurrencyLineChart: View {
                             }
                         }
                     }
+                    .chartScrollableAxes(.horizontal)
+//                    .chartScrollTargetBehavior(
+//                        .valueAligned(
+//                            matching: DateComponents(minute: 0),
+//                            majorAlignment: .matching(DateComponents(hour: 0))
+//                        )
+//                    )
                     .chartLegend(position: .top)
                     .frame(height: 300)
                     .padding()
-                    .frame(minWidth: CGFloat(chartViewModel.currencyRates.count) * 50) // Adjust width dynamically
-                }
+//                    .frame(minWidth: CGFloat(chartViewModel.currencyRates.count) * 50) // Adjust width dynamically
+//                }
             } else {
                 Text("No data available.")
                     .foregroundColor(.gray)
                     .padding()
             }
         }
-        .onAppear {
-            fetchCurrencyRates()
-        }
-        .onChange(of: viewModel.renderedTimeseriesResponse) { oldResponse, newResponse in
-            guard let response = newResponse else { return }
-            chartViewModel.fetchCurrencyRates(from: response)
-            isLoading = false
-        }
-    }
-    
-    private func fetchCurrencyRates() {
-        isLoading = true
-        errorMessage = nil
-        
-        viewModel.fetchTimeseries(
-            startDate: getTimestamptz(10),
-            endDate: getTimestamptz(),
-            currencies: currencies,
-            base: baseCurrency
-        )
     }
     
     /// Normalize the currency rates to a percentage change from the first value
