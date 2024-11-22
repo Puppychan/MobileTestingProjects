@@ -238,11 +238,8 @@
 		3D6A6CAB2CE774190094F12B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3D9C70442CF084A90080585D /* Screens */,
 				3D6A6CD72CE910A30094F12B /* Components */,
-				3D6A6CD32CE8B4910094F12B /* LatestRatesView.swift */,
-				3D6A6CD52CE909EE0094F12B /* HomeView.swift */,
-				3D9C70232CED95CE0080585D /* ContentView.swift */,
-				3D9C70292CEE21D80080585D /* SettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -251,7 +248,6 @@
 			isa = PBXGroup;
 			children = (
 				3D6A6CAD2CE77E120094F12B /* NetworkManager.swift */,
-				3D9C70052CEA4F810080585D /* CurrencyFlagManager.swift */,
 				3D9C70112CEA73050080585D /* CustomFormatter.swift */,
 				602BDC0D2CEDD3C800C5455D /* CustomDateFormatter.swift */,
 				3D9C702F2CEE47C20080585D /* ThemeManager.swift */,
@@ -271,8 +267,9 @@
 		3D6A6CBB2CE85AC30094F12B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				3D9C70392CEEF6B40080585D /* ViewModifier */,
 				3D6A6CAF2CE77E1B0094F12B /* Enum */,
+				3D9C70392CEEF6B40080585D /* ViewModifier */,
+				3D9C70052CEA4F810080585D /* CurrencyFlagManager.swift */,
 				3D6A6CBC2CE85AE00094F12B /* Constants.swift */,
 				3D9C700F2CEA65300080585D /* HandleImage.swift */,
 				3D9C70182CEC9EB40080585D /* ThemeConstants.swift */,
@@ -341,6 +338,17 @@
 				601F78DD2CEF41CE00C051AC /* ConversionResultSection.swift */,
 			);
 			path = Currency;
+			sourceTree = "<group>";
+		};
+		3D9C70442CF084A90080585D /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				3D6A6CD32CE8B4910094F12B /* LatestRatesView.swift */,
+				3D6A6CD52CE909EE0094F12B /* HomeView.swift */,
+				3D9C70232CED95CE0080585D /* ContentView.swift */,
+				3D9C70292CEE21D80080585D /* SettingView.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		602BDC132CEDDA3600C5455D /* Assets */ = {
