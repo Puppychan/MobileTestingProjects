@@ -16,6 +16,9 @@ struct CurrencyConvertCard: View {
     @EnvironmentObject var viewModel: CurrencyViewModel
     
     @FocusState private var focusedField: FocusField?
+    @State private var showAlert: Bool = false
+    @State private var alertTitle: String = ""
+    @State private var alertMessage: String = ""
     
     @Binding var fromCurrency: CurrencyFlagModel
     @Binding var toCurrency: CurrencyFlagModel
@@ -68,11 +71,29 @@ struct CurrencyConvertCard: View {
                 self.focusedField = .toAmount
             }
         }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text(alertTitle),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("Got It"))
+            )
+        }
         .padding()
         .background(LinearGradient(colors: [ThemeConstants.TERTIARY_COLOR.opacity(0.3), ThemeConstants.PRIMARY_COLOR.opacity(0.6)], startPoint: .topLeading, endPoint: .bottomTrailing).opacity(0.5))
         .cornerRadius(10)
         .shadow(radius: 5)
         //        .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
+    }
+    
+    private func handleError(_ error: NetworkErrorEnum) {
+        if error == .noInternetConnection {
+            alertTitle = "Error"
+            alertMessage = error.errorDescription ?? "No Internet Connection"
+        } else {
+            alertTitle = "Error"
+            alertMessage = "There is something wrong. Please try again later!"
+        }
+        showAlert = true
     }
     
     private func updateToAmount() {

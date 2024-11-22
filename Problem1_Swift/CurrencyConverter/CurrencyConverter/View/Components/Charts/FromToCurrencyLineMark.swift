@@ -21,13 +21,8 @@ struct FromToCurrencyLineMark: View {
     
     var body: some View {
         VStack {
-//            if let networkError = viewModel.networkError {
-//                Text("Error: \(networkError.localizedDescription)")
-//            } else {
-//                Text("No Error")
-//            }
             Text("Exchange Rates for \(toCurrency.code) - \(toCurrency.name)")
-                .font(.headline)
+                .font(.title3)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
             Text("Base Currency: \(fromCurrency.code) - \(fromCurrency.name)")
