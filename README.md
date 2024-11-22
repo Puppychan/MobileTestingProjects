@@ -1,4 +1,17 @@
-<h1>Currency Rates Tracker</h1>
+<h1>Testing Project</h1>
+- This repository contains the iOS applications and problem 2 answers.
+- This repository is done by [Nhung Tran](https://www.linkedin.com/in/nhungtr)
+
+- Below is general project folder structure:
+``` bash
+MobileTestingProjects/
+├── Problem1_Swift/       # Currency Converter Application
+├── Problem2/             # Problem 2 Answers
+
+```
+
+
+# 📂 Problem 1: Currency Converter Application
 A powerful and intuitive application to track currency exchange rates globally. With dynamic charts, error handling, and real-time updates, it is designed for users who need insights into currency trends with ease.
 
 ## 🚀 Key Features
@@ -54,17 +67,30 @@ Ensure that the project is set to run on an iOS device with version 17.0 or high
 
 ## 📁 Folder Structure
 ``` bash
-CurrencyRatesTracker/
-├── Charts/               # Contains reusable chart components
-├── Models/               # Data models for the app (e.g., ExchangeRate, Currency)
-├── ViewModels/           # ViewModels for managing app state and logic
-├── Views/                # SwiftUI views for rendering UI
-│   ├── Components/       # Reusable UI components (e.g., ErrorView, ProgressView)
-│   ├── Screens/          # Main screens like Home, CurrencyDetail
-├── Utilities/            # Helper functions and utilities (e.g., API calls, date formatting)
+CurrencyConverter/
 ├── Assets/               # App assets (e.g., images, colors, fonts)
-├── Tests/                # Unit and UI tests
-└── README.md             # Project documentation
+│   ├── Data/             # Storing static JSON data
+├── Helpers/              # Supporting reusable functional and helpers files
+│   ├── Enum/             # Storing enum files for the app
+│   ├── ViewModifier/     # Storing reusable view modifier files
+├── Utilities/            # Helper functions and utilities (e.g., API calls, date formatting, network manager) that can be reused in other projects
+├── Views/                # SwiftUI views for rendering UI
+│   ├── Components/       # Reusable UI components (e.g., ErrorView ProgressView)
+│   │   ├── Charts/       # Contains reusable chart components
+│   │   ├── Currency/     # Contains reusable components relevant to currency
+│   │   ├── SettingView/  # Contains setting view components and sections
+│   │   ├── Card/         # Contains reusable card components for displaying data
+│   ├── Screens/          # Main screens like Home, Settings, etc.
+├── Models/               # Data models for the app (e.g., ExchangeRate, Currency)
+│   │   ├── Response/     # For defining models for API response
+└── ViewModels/           # ViewModels for managing app state and logic
 ```
 
+## 📝 Additional Notes
+### Reference
 - Currencies having Flag: https://gist.githubusercontent.com/ibrahimhajjaj/a0e39e7330aebf0feb49912f1bf9062f/raw/d160e7d3b0e11ea3912e97a1b3b25b359746c86a/currencies-with-flags.json
+
+### Future Enhancements
+- Add more user interactions and animations to enhance the user experience.
+- Implement a search feature to allow users to search for specific currencies in the past.
+
